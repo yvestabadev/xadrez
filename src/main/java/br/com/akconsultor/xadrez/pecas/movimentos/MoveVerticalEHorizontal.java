@@ -1,5 +1,6 @@
-package br.com.akconsultor.xadrez.pecas;
+package br.com.akconsultor.xadrez.pecas.movimentos;
 
+import br.com.akconsultor.xadrez.pecas.Peca;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
 public interface MoveVerticalEHorizontal {

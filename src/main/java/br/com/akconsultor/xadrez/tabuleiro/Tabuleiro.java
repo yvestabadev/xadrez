@@ -26,6 +26,16 @@ public class Tabuleiro {
 	public void setAcionarMovimento(boolean[][] acionarMovimento) {
 		this.acionarMovimento = acionarMovimento;
 	}
+	
+	public void complementarMovimento(boolean[][] movimento) {
+		for(int i = 0; i< 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				if(movimento[i][j]) {
+					this.acionarMovimento[i][j] = true;
+				}
+			}
+		}
+	}
 
 	
 

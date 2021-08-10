@@ -1,12 +1,12 @@
 package br.com.akconsultor.xadrez.pecas;
 
+import br.com.akconsultor.xadrez.pecas.movimentos.MoveDiagonal;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveVerticalEHorizontal;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
-public class Torre extends Peca implements MoveVerticalEHorizontal{
+public class Dama extends Peca implements MoveDiagonal, MoveVerticalEHorizontal{
 	
-	
-	public Torre(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
+	public Dama(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
 		if(ehBranca) {
@@ -17,14 +17,11 @@ public class Torre extends Peca implements MoveVerticalEHorizontal{
 		
 	}
 
-
-
 	@Override
 	public void verificaDestino(Tabuleiro tabuleiro) {
-		tabuleiro.setAcionarMovimento(moveLado(this, tabuleiro));		
+		tabuleiro.setAcionarMovimento(moveLado(this, tabuleiro));
+		tabuleiro.complementarMovimento(moveDiagonal(this, tabuleiro));
+		
 	}
-
-
-	
 
 }
