@@ -2,21 +2,15 @@ package br.com.akconsultor.xadrez.pecas;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
 class BispoTest {
 	
-	Bispo bispo;
-	Tabuleiro tabuleiro;
 	
-	@BeforeEach
-	void novoBispo() {
-		tabuleiro = new Tabuleiro();
-		bispo = new Bispo(true, 3, 3, tabuleiro);
-	}
+	Tabuleiro tabuleiro = new Tabuleiro();
+	Bispo bispo = new Bispo(true, 3, 3, tabuleiro);;
 
 	@Test
 	void tabuleiroVazio() {
@@ -47,6 +41,27 @@ class BispoTest {
 		bispo.verificaDestino(tabuleiro);
 		assertTrue(tabuleiro.getAcionarMovimento()[6][6]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[7][7]);
+	}
+	
+	@Test
+	void bispoPreto() {
+		Bispo outroBispo = new Bispo(false, 6, 6, tabuleiro);
+		outroBispo.verificaDestino(tabuleiro);
+		assertTrue(tabuleiro.getAcionarMovimento()[5][5]);
+		assertTrue(tabuleiro.getAcionarMovimento()[4][4]);
+		assertTrue(tabuleiro.getAcionarMovimento()[3][3]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[2][2]);
+	}
+	
+	@Test
+	void maisBispoPreto() {
+		Bispo outroBispo = new Bispo(false, 6, 6, tabuleiro);
+		Bispo bispoPreto = new Bispo(false, 4, 4, tabuleiro);
+		outroBispo.verificaDestino(tabuleiro);
+		assertTrue(tabuleiro.getAcionarMovimento()[5][5]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[4][4]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[3][3]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[2][2]);
 	}
 
 }

@@ -55,7 +55,7 @@ public interface MoveVerticalEHorizontal {
 
 				podeMover[posicao[0]][i] = true;
 			}
-		} else if (!peca.getEhBranca()) {
+		} else {
 			for (int i = posicao[0] + 1; i < 8; i++) {
 
 				if (tabuleiro.getPosicoesPretas(i, posicao[1])) {

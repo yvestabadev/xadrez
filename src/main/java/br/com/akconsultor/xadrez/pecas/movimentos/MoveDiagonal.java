@@ -70,9 +70,7 @@ public interface MoveDiagonal {
 				podeMover[i][posicao[1] + posicao[0] - i] = true;
 			}
 
-		}
-
-		if (!peca.getEhBranca()) {
+		} else {
 			for (int i = posicao[0] + 1; i < 8; i++) {
 				try {
 					if (tabuleiro.getPosicoesPretas(i, posicao[1] + i - posicao[0])) {

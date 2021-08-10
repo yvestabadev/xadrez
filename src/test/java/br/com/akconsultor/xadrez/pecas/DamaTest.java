@@ -2,21 +2,16 @@ package br.com.akconsultor.xadrez.pecas;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
 class DamaTest {
 	
-	Dama dama;
-	Tabuleiro tabuleiro;
 	
-	@BeforeEach
-	void novaDama() {
-		tabuleiro = new Tabuleiro();
-		dama = new Dama(true, 3, 3, tabuleiro);
-	}
+	Tabuleiro tabuleiro = new Tabuleiro();
+	Dama dama = new Dama(true, 3, 3, tabuleiro);;
+	
 
 	@Test
 	void tabuleiroVazio() {
@@ -50,6 +45,24 @@ class DamaTest {
 		dama.verificaDestino(tabuleiro);
 		assertTrue(!tabuleiro.getAcionarMovimento()[5][3]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[6][3]);
+	}
+	
+	@Test
+	void movimentoPreta() {
+		Dama outraDama = new Dama(false, 5, 3, tabuleiro);
+		outraDama.verificaDestino(tabuleiro);
+		assertTrue(tabuleiro.getAcionarMovimento()[3][3]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[2][3]);
+	}
+	
+	@Test
+	void movimentoPretaComPretaNoCaminho() {
+		Dama outraDama = new Dama(false, 5, 3, tabuleiro);
+		Dama maisOutraDama = new Dama(false, 7, 3, tabuleiro);
+
+		outraDama.verificaDestino(tabuleiro);
+		assertTrue(tabuleiro.getAcionarMovimento()[6][3]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[7][3]);
 	}
 
 }
