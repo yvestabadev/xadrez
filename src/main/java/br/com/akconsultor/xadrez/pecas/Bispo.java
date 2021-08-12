@@ -18,7 +18,7 @@ public class Bispo extends Peca implements MoveDiagonal{
 
 	@Override
 	public void verificaDestino(Tabuleiro tabuleiro) {
-		tabuleiro.setAcionarMovimento(moveDiagonal(this, tabuleiro));
+		tabuleiro.complementarMovimento(moveDiagonal(this, tabuleiro));
 		
 	}
 

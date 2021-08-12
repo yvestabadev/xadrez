@@ -17,7 +17,7 @@ public class Peao extends Peca {
 
 	@Override
 	public void verificaDestino(Tabuleiro tabuleiro) {
-		tabuleiro.setAcionarMovimento(this.movimentoPeao(tabuleiro));
+		tabuleiro.complementarMovimento(this.movimentoPeao(tabuleiro));
 	}
 
 	private boolean[][] movimentoPeao(Tabuleiro tabuleiro) {

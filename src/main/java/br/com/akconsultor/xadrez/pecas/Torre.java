@@ -21,7 +21,7 @@ public class Torre extends Peca implements MoveVerticalEHorizontal{
 
 	@Override
 	public void verificaDestino(Tabuleiro tabuleiro) {
-		tabuleiro.setAcionarMovimento(moveLado(this, tabuleiro));		
+		tabuleiro.complementarMovimento(moveLado(this, tabuleiro));		
 	}
 
 

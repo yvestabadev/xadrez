@@ -19,7 +19,7 @@ public class Dama extends Peca implements MoveDiagonal, MoveVerticalEHorizontal{
 
 	@Override
 	public void verificaDestino(Tabuleiro tabuleiro) {
-		tabuleiro.setAcionarMovimento(moveLado(this, tabuleiro));
+		tabuleiro.complementarMovimento(moveLado(this, tabuleiro));
 		tabuleiro.complementarMovimento(moveDiagonal(this, tabuleiro));
 		
 	}

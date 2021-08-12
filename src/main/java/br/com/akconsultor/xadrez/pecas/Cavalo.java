@@ -18,7 +18,7 @@ public class Cavalo extends Peca implements MoveEle{
 
 	@Override
 	public void verificaDestino(Tabuleiro tabuleiro) {
-		tabuleiro.setAcionarMovimento(moveEle(this, tabuleiro));
+		tabuleiro.complementarMovimento(moveEle(this, tabuleiro));
 	}
 
 }
