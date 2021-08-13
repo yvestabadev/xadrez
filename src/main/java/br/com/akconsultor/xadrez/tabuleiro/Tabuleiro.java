@@ -14,6 +14,7 @@ public class Tabuleiro {
 	private List<Peca> pecasBrancas = new ArrayList<Peca>();
 	private List<Peca> pecasPretas = new ArrayList<Peca>();
 	private Boolean vezDasBrancas = true;
+	private Peca pecaCapturada;
 
 	public boolean getPosicoesBrancas(Integer coluna, Integer linha) {
 		return posicoesBrancas[coluna][linha];
@@ -90,18 +91,59 @@ public class Tabuleiro {
 			peca.setPosicao(coluna, linha);
 			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
 			
+			
+			//verifica captura
+			
+			this.pecasPretas.forEach(adversario -> {
+				if(adversario.getPosicao()[0] == peca.getPosicao()[0]
+						&& adversario.getPosicao()[1] == peca.getPosicao()[1]) {
+					this.pecaCapturada = adversario;
+				}
+			});
+			
+			if(pecaCapturada != null) {
+				this.pecasPretas.remove(pecaCapturada);
+				this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
+				this.pecaCapturada = null;
+			}
+			
+			
 			//verifica check
-			this.resetAcionarMovimento();
+			this.pecasBrancas.forEach(p -> p.ameacaCasas(this));			
 			;
 			
 			this.vezDasBrancas = false;
+			
 		} else if (!jogador.getJogaComBranco() && !this.vezDasBrancas
 				&& this.acionarMovimento[coluna][linha]) {
 			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 			peca.setPosicao(coluna, linha);
 			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
+			
+			
+			//verifica captura
+			this.pecasBrancas.forEach(adversario -> {
+				if(adversario.getPosicao()[0] == peca.getPosicao()[0]
+						&& adversario.getPosicao()[1] == peca.getPosicao()[1]) {
+					this.pecaCapturada = adversario;
+				}
+			});
+			
+			if(pecaCapturada != null) {
+				pecasBrancas.remove(pecaCapturada);
+				this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
+				pecaCapturada = null;
+			}
+			
+			
+			//verifica check
+			this.pecasPretas.forEach(p -> p.ameacaCasas(this));
+			
 			this.vezDasBrancas = true;
+			
 		}
+		
+		this.resetAcionarMovimento();
 	}
 
 }

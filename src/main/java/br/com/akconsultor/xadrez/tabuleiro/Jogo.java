@@ -12,6 +12,18 @@ public class Jogo {
 		this.jogador2 = new Jogador(jogador2, false, tabuleiro);
 	}
 	
+	public Tabuleiro getTabuleiro() {
+		return tabuleiro;
+	}
+
+	public Jogador getJogador1() {
+		return jogador1;
+	}
+
+	public Jogador getJogador2() {
+		return jogador2;
+	}
+	
 	
 
 }
