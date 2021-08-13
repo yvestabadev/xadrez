@@ -22,4 +22,9 @@ public class Bispo extends Peca implements MoveDiagonal{
 		
 	}
 
+	@Override
+	public void ameacaCasas(Tabuleiro tabuleiro) {
+		tabuleiro.complementarAmeaca(moveDiagonal(this, tabuleiro));
+	}
+
 }

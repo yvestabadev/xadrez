@@ -24,6 +24,8 @@ public abstract class Peca {
 	
 	public abstract void verificaDestino(Tabuleiro tabuleiro);
 	
+	public abstract void ameacaCasas(Tabuleiro tabuleiro);
+	
 	
 	
 }

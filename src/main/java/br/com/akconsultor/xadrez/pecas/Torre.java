@@ -25,6 +25,14 @@ public class Torre extends Peca implements MoveVerticalEHorizontal{
 	}
 
 
+
+	@Override
+	public void ameacaCasas(Tabuleiro tabuleiro) {
+		tabuleiro.complementarAmeaca(moveLado(this, tabuleiro));		
+		
+	}
+
+
 	
 
 }

@@ -3,16 +3,16 @@ package br.com.akconsultor.xadrez.pecas;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
 public class Peao extends Peca {
-	
+
 	public Peao(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
-		if(ehBranca) {
+		if (ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
 			tabuleiro.setPosicoesPretas(this, coluna, linha);
 		}
-		
+
 	}
 
 	@Override
@@ -73,6 +73,45 @@ public class Peao extends Peca {
 		}
 
 		return podeMover;
+	}
+
+	@Override
+	public void ameacaCasas(Tabuleiro tabuleiro) {
+		boolean[][] ameaca = new boolean[8][8];
+		Integer[] posicao = this.getPosicao();
+
+		if (this.getEhBranca()) {
+
+			try {
+
+				ameaca[posicao[0] + 1][posicao[1] + 1] = true;
+
+			} catch (ArrayIndexOutOfBoundsException e) {
+			}
+			try {
+
+				ameaca[posicao[0] - 1][posicao[1] + 1] = true;
+
+			} catch (ArrayIndexOutOfBoundsException e) {
+			}
+
+			tabuleiro.complementarAmeaca(ameaca);
+		}
+
+		if (!this.getEhBranca()) {
+
+			try {
+				ameaca[posicao[0] + 1][posicao[1] - 1] = true;
+			} catch (ArrayIndexOutOfBoundsException e) {
+			}
+			try {
+				ameaca[posicao[0] - 1][posicao[1] - 1] = true;
+			} catch (ArrayIndexOutOfBoundsException e) {
+			}
+			
+			tabuleiro.complementarAmeaca(ameaca);
+
+		}
 	}
 
 }
