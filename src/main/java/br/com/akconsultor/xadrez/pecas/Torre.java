@@ -9,6 +9,7 @@ public class Torre extends Peca implements MoveVerticalEHorizontal{
 	public Torre(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
+		super.setTabuleiro(tabuleiro);
 		if(ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
@@ -20,14 +21,14 @@ public class Torre extends Peca implements MoveVerticalEHorizontal{
 
 
 	@Override
-	public void verificaDestino(Tabuleiro tabuleiro) {
+	public void verificaDestino() {
 		tabuleiro.complementarMovimento(moveLado(this, tabuleiro));		
 	}
 
 
 
 	@Override
-	public void ameacaCasas(Tabuleiro tabuleiro) {
+	public void ameacaCasas() {
 		tabuleiro.complementarAmeaca(moveLado(this, tabuleiro));		
 		
 	}

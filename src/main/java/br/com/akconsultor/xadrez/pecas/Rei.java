@@ -8,6 +8,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 	public Rei(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
+		super.setTabuleiro(tabuleiro);
 		if (ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
@@ -17,7 +18,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 	}
 
 	@Override
-	public void verificaDestino(Tabuleiro tabuleiro) {
+	public void verificaDestino() {
 		boolean podeMover[][] = moveRei(this, tabuleiro);
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -32,7 +33,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 	}
 
 	@Override
-	public void ameacaCasas(Tabuleiro tabuleiro) {
+	public void ameacaCasas() {
 		tabuleiro.complementarAmeaca(moveRei(this, tabuleiro));
 	}
 	

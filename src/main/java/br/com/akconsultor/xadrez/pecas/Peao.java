@@ -7,6 +7,7 @@ public class Peao extends Peca {
 	public Peao(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
+		super.setTabuleiro(tabuleiro);
 		if (ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
@@ -16,11 +17,11 @@ public class Peao extends Peca {
 	}
 
 	@Override
-	public void verificaDestino(Tabuleiro tabuleiro) {
-		tabuleiro.complementarMovimento(this.movimentoPeao(tabuleiro));
+	public void verificaDestino() {
+		tabuleiro.complementarMovimento(this.movimentoPeao());
 	}
 
-	private boolean[][] movimentoPeao(Tabuleiro tabuleiro) {
+	private boolean[][] movimentoPeao() {
 		boolean[][] podeMover = new boolean[8][8];
 		Integer[] posicao = this.getPosicao();
 
@@ -76,7 +77,7 @@ public class Peao extends Peca {
 	}
 
 	@Override
-	public void ameacaCasas(Tabuleiro tabuleiro) {
+	public void ameacaCasas() {
 		boolean[][] ameaca = new boolean[8][8];
 		Integer[] posicao = this.getPosicao();
 

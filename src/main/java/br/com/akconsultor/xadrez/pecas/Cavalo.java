@@ -8,6 +8,7 @@ public class Cavalo extends Peca implements MoveEle{
 	public Cavalo(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
+		super.setTabuleiro(tabuleiro);
 		if(ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
@@ -17,12 +18,12 @@ public class Cavalo extends Peca implements MoveEle{
 	}
 
 	@Override
-	public void verificaDestino(Tabuleiro tabuleiro) {
+	public void verificaDestino() {
 		tabuleiro.complementarMovimento(moveEle(this, tabuleiro));
 	}
 
 	@Override
-	public void ameacaCasas(Tabuleiro tabuleiro) {
+	public void ameacaCasas() {
 		tabuleiro.complementarAmeaca(moveEle(this, tabuleiro));
 	}
 	

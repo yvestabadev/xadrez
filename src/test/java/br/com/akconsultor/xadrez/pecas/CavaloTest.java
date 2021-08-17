@@ -13,7 +13,7 @@ class CavaloTest {
 
 	@Test
 	void tabuleiroVazio() {
-		cavalo.verificaDestino(tabuleiro);
+		cavalo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[1][2]);
 		assertTrue(tabuleiro.getAcionarMovimento()[2][1]);
 		assertTrue(tabuleiro.getAcionarMovimento()[4][5]);
@@ -27,7 +27,7 @@ class CavaloTest {
 	@Test
 	void comCavaloBranco() {
 		Cavalo novoCavalo = new Cavalo(true, 4, 5, tabuleiro);
-		cavalo.verificaDestino(tabuleiro);
+		cavalo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[1][2]);
 		assertTrue(tabuleiro.getAcionarMovimento()[2][1]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[4][5]);
@@ -41,7 +41,7 @@ class CavaloTest {
 	@Test
 	void comCavaloPreto() {
 		Cavalo novoCavalo = new Cavalo(false, 4, 5, tabuleiro);
-		cavalo.verificaDestino(tabuleiro);
+		cavalo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[1][2]);
 		assertTrue(tabuleiro.getAcionarMovimento()[2][1]);
 		assertTrue(tabuleiro.getAcionarMovimento()[4][5]);
@@ -55,7 +55,7 @@ class CavaloTest {
 	@Test
 	void movimentoCavaloPreto() {
 		Cavalo novoCavalo = new Cavalo(false, 4, 5, tabuleiro);
-		novoCavalo.verificaDestino(tabuleiro);
+		novoCavalo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][3]);
 		assertTrue(tabuleiro.getAcionarMovimento()[2][4]);
 		assertTrue(tabuleiro.getAcionarMovimento()[5][7]);
@@ -70,7 +70,7 @@ class CavaloTest {
 	void outroCavaloPreto() {
 		Cavalo novoCavalo = new Cavalo(false, 4, 5, tabuleiro);
 		Cavalo outroCavalo = new Cavalo(false, 6, 6, tabuleiro);
-		novoCavalo.verificaDestino(tabuleiro);
+		novoCavalo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][3]);
 		assertTrue(tabuleiro.getAcionarMovimento()[2][4]);
 		assertTrue(tabuleiro.getAcionarMovimento()[5][7]);

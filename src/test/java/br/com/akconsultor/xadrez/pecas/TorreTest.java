@@ -15,7 +15,7 @@ class TorreTest {
 
 	@Test
 	void destinoTorreSemOutraPecaNoTabuleiro() {
-		torre.verificaDestino(tabuleiro);
+		torre.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[4][5]);
 		assertTrue(tabuleiro.getAcionarMovimento()[4][6]);
 		assertTrue(tabuleiro.getAcionarMovimento()[4][7]);
@@ -37,7 +37,7 @@ class TorreTest {
 	@Test
 	void destinoTorreComPecaBrancaNoCaminho() {
 		Torre outraTorre = new Torre(true, 5, 4, tabuleiro);
-		torre.verificaDestino(tabuleiro);
+		torre.verificaDestino();
 		assertTrue(!tabuleiro.getAcionarMovimento()[5][4]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[6][4]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[7][4]);
@@ -46,7 +46,7 @@ class TorreTest {
 	@Test
 	void destinoTorreComPecaPretaNoCaminho() {
 		Torre outraTorre = new Torre(false, 5, 4, tabuleiro);
-		torre.verificaDestino(tabuleiro);
+		torre.verificaDestino();
 
 		assertTrue(tabuleiro.getAcionarMovimento()[5][4]);
 
@@ -57,7 +57,7 @@ class TorreTest {
 	@Test
 	void destinoTorrePreta() {
 		Torre outraTorre = new Torre(false, 5, 4, tabuleiro);
-		outraTorre.verificaDestino(tabuleiro);
+		outraTorre.verificaDestino();
 
 		assertTrue(tabuleiro.getAcionarMovimento()[4][4]);
 
@@ -69,7 +69,7 @@ class TorreTest {
 	void destinoTorrePretaComPretaNoCaminho() {
 		Torre outraTorre = new Torre(false, 5, 4, tabuleiro);
 		Torre outraTorrePreta = new Torre(false, 7, 4, tabuleiro);
-		outraTorre.verificaDestino(tabuleiro);
+		outraTorre.verificaDestino();
 
 		assertTrue(tabuleiro.getAcionarMovimento()[6][4]);
 

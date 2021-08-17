@@ -102,9 +102,9 @@ public class Tabuleiro {
 
 	public void verifica(Jogador jogador, Peca peca) {
 		if (jogador.getJogaComBranco() && this.vezDasBrancas) {
-			peca.verificaDestino(this);
+			peca.verificaDestino();
 		} else if (!jogador.getJogaComBranco() && !this.vezDasBrancas) {
-			peca.verificaDestino(this);
+			peca.verificaDestino();
 		}
 	}
 
@@ -133,7 +133,7 @@ public class Tabuleiro {
 			
 			
 			//verifica check
-			this.pecasBrancas.forEach(p -> p.ameacaCasas(this));			
+			this.pecasBrancas.forEach(p -> p.ameacaCasas());			
 			;
 			
 			this.vezDasBrancas = false;
@@ -161,7 +161,7 @@ public class Tabuleiro {
 			
 			
 			//verifica check
-			this.pecasPretas.forEach(p -> p.ameacaCasas(this));
+			this.pecasPretas.forEach(p -> p.ameacaCasas());
 			
 			this.vezDasBrancas = true;
 			

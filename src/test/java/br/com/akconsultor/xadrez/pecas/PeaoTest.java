@@ -14,7 +14,7 @@ class PeaoTest {
 
 	@Test
 	void tabuleiroVazio() {
-		peao.verificaDestino(tabuleiro);
+		peao.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][2]);
 		assertTrue(tabuleiro.getAcionarMovimento()[3][3]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][4]);
@@ -25,7 +25,7 @@ class PeaoTest {
 	@Test
 	void peaoNaFrente() {
 		Peao novoPeao = new Peao(true, 3, 3, tabuleiro);
-		peao.verificaDestino(tabuleiro);
+		peao.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][2]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][3]);
 
@@ -34,7 +34,7 @@ class PeaoTest {
 	@Test
 	void peaoLogoAFrente() {
 		Peao novoPeao = new Peao(true, 3, 2, tabuleiro);
-		peao.verificaDestino(tabuleiro);
+		peao.verificaDestino();
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][2]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][3]);
 
@@ -43,7 +43,7 @@ class PeaoTest {
 	@Test
 	void peaoPretoNaFrente() {
 		Peao novoPeao = new Peao(false, 3, 3, tabuleiro);
-		peao.verificaDestino(tabuleiro);
+		peao.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][2]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][3]);
 
@@ -52,7 +52,7 @@ class PeaoTest {
 	@Test
 	void peaoPretoMovendo() {
 		Peao novoPeao = new Peao(false, 3, 6, tabuleiro);
-		novoPeao.verificaDestino(tabuleiro);
+		novoPeao.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][5]);
 		assertTrue(tabuleiro.getAcionarMovimento()[3][4]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][3]);
@@ -63,7 +63,7 @@ class PeaoTest {
 	void peaoPretoMovendoComBrancoNaFrente() {
 		Peao novoPeao = new Peao(false, 3, 6, tabuleiro);
 		Peao outroBranco = new Peao(true, 3, 4, tabuleiro);
-		novoPeao.verificaDestino(tabuleiro);
+		novoPeao.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][5]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][4]);
 
@@ -73,7 +73,7 @@ class PeaoTest {
 	void peaoPretoMovendoComPretoNaFrente() {
 		Peao novoPeao = new Peao(false, 3, 6, tabuleiro);
 		Peao outroPreto = new Peao(false, 3, 4, tabuleiro);
-		novoPeao.verificaDestino(tabuleiro);
+		novoPeao.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][5]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][4]);
 
@@ -83,7 +83,7 @@ class PeaoTest {
 	void peaoPretoMovendoComPretoLogoAFrente() {
 		Peao novoPeao = new Peao(false, 3, 6, tabuleiro);
 		Peao outroPreto = new Peao(false, 3, 5, tabuleiro);
-		novoPeao.verificaDestino(tabuleiro);
+		novoPeao.verificaDestino();
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][5]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][4]);
 
@@ -93,7 +93,7 @@ class PeaoTest {
 	void capturaPeaoPreto() {
 		Peao p1 = new Peao(false, 4, 2, tabuleiro);
 		Peao p2 = new Peao(false, 2, 2, tabuleiro);
-		peao.verificaDestino(tabuleiro);
+		peao.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[4][2]);
 		assertTrue(tabuleiro.getAcionarMovimento()[2][2]);
 	}
@@ -102,7 +102,7 @@ class PeaoTest {
 	void peaoBrancoNaoCapturaBranco() {
 		Peao p1 = new Peao(true, 4, 2, tabuleiro);
 		Peao p2 = new Peao(true, 2, 2, tabuleiro);
-		peao.verificaDestino(tabuleiro);
+		peao.verificaDestino();
 		assertTrue(!tabuleiro.getAcionarMovimento()[4][2]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[2][2]);
 	}
@@ -112,7 +112,7 @@ class PeaoTest {
 		Peao p1 = new Peao(true, 4, 4, tabuleiro);
 		Peao p2 = new Peao(true, 2, 4, tabuleiro);
 		Peao peaoQueCaptura = new Peao(false, 3, 5, tabuleiro);
-		peaoQueCaptura.verificaDestino(tabuleiro);
+		peaoQueCaptura.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[4][4]);
 		assertTrue(tabuleiro.getAcionarMovimento()[2][4]);
 	}
@@ -122,7 +122,7 @@ class PeaoTest {
 		Peao p1 = new Peao(false, 4, 4, tabuleiro);
 		Peao p2 = new Peao(false, 2, 4, tabuleiro);
 		Peao peaoQueCaptura = new Peao(false, 3, 5, tabuleiro);
-		peaoQueCaptura.verificaDestino(tabuleiro);
+		peaoQueCaptura.verificaDestino();
 		assertTrue(!tabuleiro.getAcionarMovimento()[4][4]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[2][4]);
 	}

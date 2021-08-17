@@ -14,7 +14,7 @@ class BispoTest {
 
 	@Test
 	void tabuleiroVazio() {
-		bispo.verificaDestino(tabuleiro);
+		bispo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[4][4]);
 		assertTrue(tabuleiro.getAcionarMovimento()[5][5]);
 		assertTrue(tabuleiro.getAcionarMovimento()[6][6]);
@@ -30,7 +30,7 @@ class BispoTest {
 	@Test
 	void outroBispoBranco() {
 		Bispo outroBispo = new Bispo(true, 6, 6, tabuleiro);
-		bispo.verificaDestino(tabuleiro);
+		bispo.verificaDestino();
 		assertTrue(!tabuleiro.getAcionarMovimento()[6][6]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[7][7]);
 	}
@@ -38,7 +38,7 @@ class BispoTest {
 	@Test
 	void outroBispoPreto() {
 		Bispo outroBispo = new Bispo(false, 6, 6, tabuleiro);
-		bispo.verificaDestino(tabuleiro);
+		bispo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[6][6]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[7][7]);
 	}
@@ -46,7 +46,7 @@ class BispoTest {
 	@Test
 	void bispoPreto() {
 		Bispo outroBispo = new Bispo(false, 6, 6, tabuleiro);
-		outroBispo.verificaDestino(tabuleiro);
+		outroBispo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[5][5]);
 		assertTrue(tabuleiro.getAcionarMovimento()[4][4]);
 		assertTrue(tabuleiro.getAcionarMovimento()[3][3]);
@@ -57,7 +57,7 @@ class BispoTest {
 	void maisBispoPreto() {
 		Bispo outroBispo = new Bispo(false, 6, 6, tabuleiro);
 		Bispo bispoPreto = new Bispo(false, 4, 4, tabuleiro);
-		outroBispo.verificaDestino(tabuleiro);
+		outroBispo.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[5][5]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[4][4]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][3]);

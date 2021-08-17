@@ -15,7 +15,7 @@ class DamaTest {
 
 	@Test
 	void tabuleiroVazio() {
-		dama.verificaDestino(tabuleiro);
+		dama.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[4][4]);
 		assertTrue(tabuleiro.getAcionarMovimento()[5][5]);
 		assertTrue(tabuleiro.getAcionarMovimento()[6][6]);
@@ -34,7 +34,7 @@ class DamaTest {
 	@Test
 	void damaPretaNoCaminho() {
 		Dama outraDama = new Dama(false, 5, 3, tabuleiro);
-		dama.verificaDestino(tabuleiro);
+		dama.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[5][3]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[6][3]);
 	}
@@ -42,7 +42,7 @@ class DamaTest {
 	@Test
 	void damaBrancaNoCaminho() {
 		Dama outraDama = new Dama(true, 5, 3, tabuleiro);
-		dama.verificaDestino(tabuleiro);
+		dama.verificaDestino();
 		assertTrue(!tabuleiro.getAcionarMovimento()[5][3]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[6][3]);
 	}
@@ -50,7 +50,7 @@ class DamaTest {
 	@Test
 	void movimentoPreta() {
 		Dama outraDama = new Dama(false, 5, 3, tabuleiro);
-		outraDama.verificaDestino(tabuleiro);
+		outraDama.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[3][3]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[2][3]);
 	}
@@ -60,7 +60,7 @@ class DamaTest {
 		Dama outraDama = new Dama(false, 5, 3, tabuleiro);
 		Dama maisOutraDama = new Dama(false, 7, 3, tabuleiro);
 
-		outraDama.verificaDestino(tabuleiro);
+		outraDama.verificaDestino();
 		assertTrue(tabuleiro.getAcionarMovimento()[6][3]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[7][3]);
 	}

@@ -6,7 +6,7 @@ public abstract class Peca {
 	
 	private Integer[] posicao = new Integer[2];
 	private Boolean ehBranca;
-	private Tabuleiro tabuleiro;
+	protected Tabuleiro tabuleiro;
 	
 	
 	
@@ -31,9 +31,9 @@ public abstract class Peca {
 	}
 	
 	
-	public abstract void verificaDestino(Tabuleiro tabuleiro);
+	public abstract void verificaDestino();
 	
-	public abstract void ameacaCasas(Tabuleiro tabuleiro);
+	public abstract void ameacaCasas();
 	
 	
 	

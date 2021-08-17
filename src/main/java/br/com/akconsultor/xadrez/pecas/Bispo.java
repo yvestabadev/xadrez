@@ -8,6 +8,7 @@ public class Bispo extends Peca implements MoveDiagonal{
 	public Bispo(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
+		super.setTabuleiro(tabuleiro);
 		if(ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
@@ -17,13 +18,13 @@ public class Bispo extends Peca implements MoveDiagonal{
 	}
 
 	@Override
-	public void verificaDestino(Tabuleiro tabuleiro) {
+	public void verificaDestino() {
 		tabuleiro.complementarMovimento(moveDiagonal(this, tabuleiro));
 		
 	}
 
 	@Override
-	public void ameacaCasas(Tabuleiro tabuleiro) {
+	public void ameacaCasas() {
 		tabuleiro.complementarAmeaca(moveDiagonal(this, tabuleiro));
 	}
 
