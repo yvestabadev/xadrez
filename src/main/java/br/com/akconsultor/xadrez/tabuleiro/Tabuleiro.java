@@ -15,6 +15,30 @@ public class Tabuleiro {
 	private List<Peca> pecasPretas = new ArrayList<Peca>();
 	private Boolean vezDasBrancas = true;
 	private Peca pecaCapturada;
+	private Boolean check = false;
+	private Integer[] reiBranco;
+	private Integer[] reiPreto;
+	
+	
+	
+
+	public void setReiBranco(Integer coluna, Integer linha) {
+		this.reiBranco[0] = coluna;
+		this.reiBranco[1] = linha;
+	}
+
+	public void setReiPreto(Integer coluna, Integer linha) {
+		this.reiPreto[0] = coluna;
+		this.reiPreto[1] = linha;
+	}
+
+	public Boolean getCheck() {
+		return check;
+	}
+
+	public boolean[][] getLugaresAmeacados() {
+		return lugaresAmeacados;
+	}
 
 	public boolean getPosicoesBrancas(Integer coluna, Integer linha) {
 		return posicoesBrancas[coluna][linha];

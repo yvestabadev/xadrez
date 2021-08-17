@@ -79,8 +79,8 @@ class JogoTest {
 		tabuleiro.verifica(j1, peca);
 		tabuleiro.move(j1, peca, 4, 4);
 		assertTrue(tabuleiro.getPosicoesBrancas(4, 4));
-		assertTrue(tabuleiro.getPecasPretas().size() == 14);
-		assertTrue(tabuleiro.getPecasBrancas().size() == 15);
+		assertTrue(tabuleiro.getPecasPretas().size() == 15);
+		assertTrue(tabuleiro.getPecasBrancas().size() == 16);
 		
 		tabuleiro.getPecasPretas().forEach(p -> {
 			if (p.getPosicao()[0] == 5 && p.getPosicao()[1] == 6) {
@@ -112,7 +112,7 @@ class JogoTest {
 		tabuleiro.move(j2, peca, 4, 4);
 		
 		assertTrue(!tabuleiro.getPosicoesBrancas(4, 4));
-		assertTrue(tabuleiro.getPecasBrancas().size() == 14);
+		assertTrue(tabuleiro.getPecasBrancas().size() == 15);
 		
 		
 		

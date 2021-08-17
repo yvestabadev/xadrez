@@ -8,6 +8,7 @@ import br.com.akconsultor.xadrez.pecas.Cavalo;
 import br.com.akconsultor.xadrez.pecas.Dama;
 import br.com.akconsultor.xadrez.pecas.Peao;
 import br.com.akconsultor.xadrez.pecas.Peca;
+import br.com.akconsultor.xadrez.pecas.Rei;
 import br.com.akconsultor.xadrez.pecas.Torre;
 
 public class Jogador {
@@ -31,6 +32,7 @@ public class Jogador {
 			pecas.add(new Bispo(true, 2, 0, tabuleiro));
 			pecas.add(new Bispo(true, 5, 0, tabuleiro));
 			pecas.add(new Dama(true, 3, 0, tabuleiro));
+			pecas.add(new Rei(true, 4, 0, tabuleiro));
 			pecas.add(new Peao(true, 0, 1, tabuleiro));
 			pecas.add(new Peao(true, 1, 1, tabuleiro));
 			pecas.add(new Peao(true, 2, 1, tabuleiro));
@@ -49,6 +51,7 @@ public class Jogador {
 			pecas.add(new Bispo(false, 2, 7, tabuleiro));
 			pecas.add(new Bispo(false, 5, 7, tabuleiro));
 			pecas.add(new Dama(false, 3, 7, tabuleiro));
+			pecas.add(new Rei(false, 4, 7, tabuleiro));
 			pecas.add(new Peao(false, 0, 6, tabuleiro));
 			pecas.add(new Peao(false, 1, 6, tabuleiro));
 			pecas.add(new Peao(false, 2, 6, tabuleiro));

@@ -6,7 +6,16 @@ public abstract class Peca {
 	
 	private Integer[] posicao = new Integer[2];
 	private Boolean ehBranca;
+	private Tabuleiro tabuleiro;
 	
+	
+	
+	public Tabuleiro getTabuleiro() {
+		return tabuleiro;
+	}
+	public void setTabuleiro(Tabuleiro tabuleiro) {
+		this.tabuleiro = tabuleiro;
+	}
 	public Integer[] getPosicao() {
 		return posicao;
 	}
