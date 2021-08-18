@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.akconsultor.xadrez.pecas.Peca;
+import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 
 public class Tabuleiro {
 
@@ -16,11 +17,30 @@ public class Tabuleiro {
 	private Boolean vezDasBrancas = true;
 	private Peca pecaCapturada;
 	private Boolean check = false;
-	private Integer[] reiBranco;
-	private Integer[] reiPreto;
+	private Integer[] reiBranco = new Integer[2];
+	private Integer[] reiPreto = new Integer[2];
+	private List<Direcao> direcoesCheck = new ArrayList<Direcao>();
+	private Peca pecaAmeaca;
 	
+	public void setPecaAmeaca(Peca pecaAmeaca) {
+		this.pecaAmeaca = pecaAmeaca;
+	}
 	
+	public Peca getPecaAmeaca() {
+		return pecaAmeaca;
+	}
 	
+	private void resetDirecoesCheck() {
+		direcoesCheck.removeAll(direcoesCheck);
+	}
+	
+	public List<Direcao> getDirecoesCheck() {
+		return direcoesCheck;
+	}
+	
+	public void adicionarDirecoesCheck(Direcao direcao) {
+		this.direcoesCheck.add(direcao);
+	}
 
 	public void setReiBranco(Integer coluna, Integer linha) {
 		this.reiBranco[0] = coluna;
@@ -30,6 +50,14 @@ public class Tabuleiro {
 	public void setReiPreto(Integer coluna, Integer linha) {
 		this.reiPreto[0] = coluna;
 		this.reiPreto[1] = linha;
+	}
+	
+	public Integer[] getReiBranco() {
+		return reiBranco;
+	}
+	
+	public Integer[] getReiPreto() {
+		return reiPreto;
 	}
 
 	public Boolean getCheck() {
@@ -89,7 +117,7 @@ public class Tabuleiro {
 			}
 		}
 	}
-	
+
 	public void complementarAmeaca(boolean[][] movimento) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -101,6 +129,7 @@ public class Tabuleiro {
 	}
 
 	public void verifica(Jogador jogador, Peca peca) {
+		this.resetAcionarMovimento();
 		if (jogador.getJogaComBranco() && this.vezDasBrancas) {
 			peca.verificaDestino();
 		} else if (!jogador.getJogaComBranco() && !this.vezDasBrancas) {
@@ -109,65 +138,75 @@ public class Tabuleiro {
 	}
 
 	public void move(Jogador jogador, Peca peca, Integer coluna, Integer linha) {
-		if (jogador.getJogaComBranco() && this.vezDasBrancas
-				&& this.acionarMovimento[coluna][linha]) {
+		if (jogador.getJogaComBranco() && this.vezDasBrancas && this.acionarMovimento[coluna][linha]) {
 			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 			peca.setPosicao(coluna, linha);
 			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
-			
-			
-			//verifica captura
-			
+
+			// verifica captura
+
 			this.pecasPretas.forEach(adversario -> {
-				if(adversario.getPosicao()[0] == peca.getPosicao()[0]
+				if (adversario.getPosicao()[0] == peca.getPosicao()[0]
 						&& adversario.getPosicao()[1] == peca.getPosicao()[1]) {
 					this.pecaCapturada = adversario;
 				}
 			});
-			
-			if(pecaCapturada != null) {
+
+			if (pecaCapturada != null) {
 				this.pecasPretas.remove(pecaCapturada);
 				this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 				this.pecaCapturada = null;
 			}
-			
-			
-			//verifica check
-			this.pecasBrancas.forEach(p -> p.ameacaCasas());			
-			;
-			
+
+			// verifica check
+			this.resetCheck();
+			this.pecasBrancas.forEach(p -> p.ameacaCasas());
+			if (this.lugaresAmeacados[reiPreto[0]][reiPreto[1]]) {
+				this.check = true;
+			}
+
 			this.vezDasBrancas = false;
-			
-		} else if (!jogador.getJogaComBranco() && !this.vezDasBrancas
-				&& this.acionarMovimento[coluna][linha]) {
+
+		} else if (!jogador.getJogaComBranco() && !this.vezDasBrancas && this.acionarMovimento[coluna][linha]) {
 			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 			peca.setPosicao(coluna, linha);
 			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
-			
-			
-			//verifica captura
+
+			// verifica captura
 			this.pecasBrancas.forEach(adversario -> {
-				if(adversario.getPosicao()[0] == peca.getPosicao()[0]
+				if (adversario.getPosicao()[0] == peca.getPosicao()[0]
 						&& adversario.getPosicao()[1] == peca.getPosicao()[1]) {
 					this.pecaCapturada = adversario;
 				}
 			});
-			
-			if(pecaCapturada != null) {
+
+			if (pecaCapturada != null) {
 				pecasBrancas.remove(pecaCapturada);
 				this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 				pecaCapturada = null;
 			}
-			
-			
-			//verifica check
+
+			// verifica check
+			this.resetCheck();
 			this.pecasPretas.forEach(p -> p.ameacaCasas());
-			
+
+			if (this.lugaresAmeacados[reiBranco[0]][reiBranco[1]]) {
+				this.check = true;
+			}
+
 			this.vezDasBrancas = true;
-			
+
 		}
-		
+
 		this.resetAcionarMovimento();
+		
+	}
+	
+	private void resetCheck() {
+		this.lugaresAmeacados = new boolean[8][8];	
+		this.resetDirecoesCheck();
+		this.pecaAmeaca = null;
+		this.check = false;
 	}
 
 }

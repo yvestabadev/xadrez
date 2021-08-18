@@ -106,4 +106,47 @@ public interface MoveVerticalEHorizontal {
 		
 		return podeMover;
 	}
+	
+	public default void verificaCheckLado(Peca peca, Tabuleiro tabuleiro) {
+		
+		Integer[] reiBranco = tabuleiro.getReiBranco();
+		Integer[] reiPreto = tabuleiro.getReiPreto();
+		Integer[] posicaoPeca = peca.getPosicao();
+		boolean podeMover[][] = moveLado(peca, tabuleiro);
+
+		if (peca.getEhBranca()) {
+			
+			if (podeMover[reiPreto[0]][reiPreto[1]]) {
+				if (reiPreto[0] < posicaoPeca[0]) {
+					tabuleiro.adicionarDirecoesCheck(Direcao.ESQUERDA);
+				} else if (reiPreto[1] > posicaoPeca[1]) {
+					tabuleiro.adicionarDirecoesCheck(Direcao.FRENTE);
+				} else if (reiPreto[0] > posicaoPeca[0]) {
+					tabuleiro.adicionarDirecoesCheck(Direcao.DIREITA);
+				} else {
+					tabuleiro.adicionarDirecoesCheck(Direcao.TRAS);
+				}
+				
+				tabuleiro.setPecaAmeaca(peca);
+			}
+
+		} else {
+
+			if (podeMover[reiBranco[0]][reiBranco[1]]) {
+				if (reiBranco[0] < posicaoPeca[0]) {
+					tabuleiro.adicionarDirecoesCheck(Direcao.ESQUERDA);
+				} else if (reiBranco[1] > posicaoPeca[1]) {
+					tabuleiro.adicionarDirecoesCheck(Direcao.FRENTE);
+				} else if (reiBranco[0] > posicaoPeca[0]) {
+					tabuleiro.adicionarDirecoesCheck(Direcao.DIREITA);
+				} else {
+					tabuleiro.adicionarDirecoesCheck(Direcao.TRAS);
+				}
+
+			}
+			
+			tabuleiro.setPecaAmeaca(peca);
+		}
+		
+	}
 }

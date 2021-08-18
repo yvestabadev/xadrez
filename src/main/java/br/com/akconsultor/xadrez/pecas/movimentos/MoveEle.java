@@ -143,5 +143,13 @@ public interface MoveEle {
 		return podeMover;
 
 	}
+	
+	public default void verificaCheck(Peca peca, Tabuleiro tabuleiro) {
+		boolean[][] podeMover = moveEle(peca, tabuleiro);
+		if(podeMover[tabuleiro.getReiPreto()[0]][tabuleiro.getReiPreto()[1]]) {
+			tabuleiro.adicionarDirecoesCheck(Direcao.ELE);
+			tabuleiro.setPecaAmeaca(peca);
+		}
+	}
 
 }

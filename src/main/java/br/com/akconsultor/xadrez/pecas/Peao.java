@@ -1,8 +1,9 @@
 package br.com.akconsultor.xadrez.pecas;
 
+import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
-public class Peao extends Peca {
+public class Peao extends Peca implements ProtegeRei {
 
 	public Peao(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
@@ -18,7 +19,13 @@ public class Peao extends Peca {
 
 	@Override
 	public void verificaDestino() {
-		tabuleiro.complementarMovimento(this.movimentoPeao());
+		if (tabuleiro.getCheck()) {
+			boolean[][] destino = corrigeDestino(this.movimentoPeao(), this, tabuleiro);
+			tabuleiro.complementarMovimento(destino);
+		} else {
+
+			tabuleiro.complementarMovimento(this.movimentoPeao());
+		}
 	}
 
 	private boolean[][] movimentoPeao() {
@@ -109,10 +116,48 @@ public class Peao extends Peca {
 				ameaca[posicao[0] - 1][posicao[1] - 1] = true;
 			} catch (ArrayIndexOutOfBoundsException e) {
 			}
-			
+
 			tabuleiro.complementarAmeaca(ameaca);
 
 		}
 	}
 
+	private void verificaCheck() {
+		Integer[] reiPreto = tabuleiro.getReiPreto();
+		Integer[] reiBranco = tabuleiro.getReiBranco();
+		Integer[] posicao = this.getPosicao();
+
+		if (this.getEhBranca()) {
+			try {
+				if (posicao[0] + 1 == reiPreto[0] && posicao[1] + 1 == reiPreto[1]) {
+					tabuleiro.setPecaAmeaca(this);
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+
+			}
+			try {
+				if (posicao[0] - 1 == reiPreto[0] && posicao[1] + 1 == reiPreto[1]) {
+					tabuleiro.setPecaAmeaca(this);
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+
+			}
+
+		} else {
+			try {
+				if (posicao[0] + 1 == reiBranco[0] && posicao[1] - 1 == reiBranco[1]) {
+					tabuleiro.setPecaAmeaca(this);
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+
+			}
+			try {
+				if (posicao[0] - 1 == reiBranco[0] && posicao[1] - 1 == reiBranco[1]) {
+					tabuleiro.setPecaAmeaca(this);
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+
+			}
+		}
+	}
 }

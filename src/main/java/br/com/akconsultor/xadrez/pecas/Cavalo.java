@@ -1,5 +1,6 @@
 package br.com.akconsultor.xadrez.pecas;
 
+import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveEle;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
@@ -9,6 +10,7 @@ public class Cavalo extends Peca implements MoveEle{
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
 		super.setTabuleiro(tabuleiro);
+		this.adicionarDirecoes(Direcao.ELE);
 		if(ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
@@ -20,6 +22,7 @@ public class Cavalo extends Peca implements MoveEle{
 	@Override
 	public void verificaDestino() {
 		tabuleiro.complementarMovimento(moveEle(this, tabuleiro));
+		verificaCheck(this, tabuleiro);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package br.com.akconsultor.xadrez.pecas;
 
+import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveVerticalEHorizontal;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
@@ -10,6 +11,7 @@ public class Torre extends Peca implements MoveVerticalEHorizontal{
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
 		super.setTabuleiro(tabuleiro);
+		this.adicionarDirecoes(Direcao.LADOS);
 		if(ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
@@ -29,7 +31,8 @@ public class Torre extends Peca implements MoveVerticalEHorizontal{
 
 	@Override
 	public void ameacaCasas() {
-		tabuleiro.complementarAmeaca(moveLado(this, tabuleiro));		
+		tabuleiro.complementarAmeaca(moveLado(this, tabuleiro));
+		verificaCheckLado(this, tabuleiro);
 		
 	}
 

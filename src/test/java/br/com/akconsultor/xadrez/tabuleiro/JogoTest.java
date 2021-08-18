@@ -119,5 +119,68 @@ class JogoTest {
 		
 
 	}
+	
+	@Test
+	void check() {
+		tabuleiro.getPecasBrancas().forEach(p -> {
+			if (p.getPosicao()[0] == 5 && p.getPosicao()[1] == 1) {
+				peca = p;
+			}
+		});
+		
+		tabuleiro.verifica(j1, peca);
+		tabuleiro.move(j1, peca, 5, 3);
+		
+		tabuleiro.getPecasPretas().forEach(p -> {
+			if (p.getPosicao()[0] == 4 && p.getPosicao()[1] == 6) {
+				peca = p;
+			}
+		});
+		
+		tabuleiro.verifica(j2, peca);
+		tabuleiro.move(j2, peca, 4, 4);
+		
+		assertTrue(tabuleiro.getPosicoesBrancas(5, 3));
+		assertTrue(tabuleiro.getPosicoesPretas(4, 4));
+		
+		tabuleiro.getPecasBrancas().forEach(p -> {
+			if (p.getPosicao()[0] == 5 && p.getPosicao()[1] == 3) {
+				peca = p;
+			}
+		});
+		
+		tabuleiro.verifica(j1, peca);
+		tabuleiro.move(j1, peca, 4, 4);
+		
+		tabuleiro.getPecasPretas().forEach(p -> {
+			if (p.getPosicao()[0] == 3 && p.getPosicao()[1] == 7) {
+				peca = p;
+			}
+		});
+		
+		tabuleiro.verifica(j2, peca);
+		tabuleiro.move(j2, peca, 7, 3);
+		
+		assertTrue(tabuleiro.getCheck());
+		
+		tabuleiro.getPecasBrancas().forEach(p -> {
+			if (p.getPosicao()[0] == 6 && p.getPosicao()[1] == 1) {
+				peca = p;
+			}
+		});
+		
+
+		
+		tabuleiro.verifica(j1, peca);
+		
+		assertTrue(tabuleiro.getAcionarMovimento()[6][2]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[6][3]);
+		
+		tabuleiro.move(j1, peca, 6, 2);
+		
+		assertTrue(!tabuleiro.getCheck());
+		
+		
+	}
 
 }

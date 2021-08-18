@@ -11,8 +11,10 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 		super.setTabuleiro(tabuleiro);
 		if (ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
+			tabuleiro.setReiBranco(coluna, linha);
 		} else {
 			tabuleiro.setPosicoesPretas(this, coluna, linha);
+			tabuleiro.setReiPreto(coluna, linha);
 		}
 
 	}
@@ -27,7 +29,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 				}
 			}
 		}
-		
+
 		tabuleiro.complementarMovimento(podeMover);
 
 	}
@@ -36,6 +38,15 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 	public void ameacaCasas() {
 		tabuleiro.complementarAmeaca(moveRei(this, tabuleiro));
 	}
-	
+
+	@Override
+	public void setPosicao(Integer coluna, Integer linha) {
+		super.setPosicao(coluna, linha);
+		if (this.getEhBranca()) {
+			this.tabuleiro.setReiBranco(coluna, linha);
+		} else {
+			this.tabuleiro.setReiPreto(coluna, linha);
+		}
+	}
 
 }
