@@ -10,15 +10,15 @@ public interface ProtegeRei {
 	public default boolean[][] corrigeDestino(boolean[][] destino, Peca peca, Tabuleiro tabuleiro) {
 		boolean[][] resolveCheck = resolveCheck(peca, tabuleiro);
 		boolean[][] retorno = new boolean[8][8];
-		
-		for(int i = 0; i < 8; i++) {
-			for(int j = 0; j < 8; j++) {
-				if(destino[i][j] && resolveCheck[i][j]) {
+
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (destino[i][j] && resolveCheck[i][j]) {
 					retorno[i][j] = true;
 				}
 			}
 		}
-		
+
 		return retorno;
 	}
 
@@ -26,10 +26,12 @@ public interface ProtegeRei {
 		boolean[][] podeMover = new boolean[8][8];
 		Integer[] reiBranco = tabuleiro.getReiBranco();
 		Integer[] reiPreto = tabuleiro.getReiPreto();
+		Integer[] pecaAmeaca = tabuleiro.getPecaAmeaca().getPosicao();
 		List<Direcao> direcoes = tabuleiro.getDirecoesCheck();
 
-		if (peca.getEhBranca()) {
-			if (tabuleiro.getDirecoesCheck().size() == 1) {
+		if (tabuleiro.getDirecoesCheck().size() == 1) {
+			if (peca.getEhBranca()) {
+
 				Direcao direcao = direcoes.get(0);
 				if (direcao == Direcao.NE) {
 					for (int i = reiBranco[0] - 1; i >= 0; i--) {
@@ -108,10 +110,9 @@ public interface ProtegeRei {
 
 				}
 			}
-		}
 
-		else {
-			if (tabuleiro.getDirecoesCheck().size() == 1) {
+			else {
+
 				Direcao direcao = direcoes.get(0);
 				if (direcao == Direcao.NE) {
 					for (int i = reiPreto[0] - 1; i >= 0; i--) {
@@ -190,6 +191,8 @@ public interface ProtegeRei {
 
 				}
 			}
+			
+			podeMover[pecaAmeaca[0]][pecaAmeaca[1]] = true;
 		}
 		return podeMover;
 	}

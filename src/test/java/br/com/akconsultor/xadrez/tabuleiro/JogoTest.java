@@ -180,6 +180,36 @@ class JogoTest {
 		
 		assertTrue(!tabuleiro.getCheck());
 		
+		tabuleiro.getPecasPretas().forEach(p -> {
+			if (p.getPosicao()[0] == 7 && p.getPosicao()[1] == 3) {
+				peca = p;
+			}
+		});
+		
+		tabuleiro.verifica(j2, peca);
+		tabuleiro.move(j2, peca, 6, 2);
+		
+		assertTrue(tabuleiro.getPecasBrancas().size() == 15);
+		assertTrue(tabuleiro.getCheck());
+		
+		tabuleiro.getPecasBrancas().forEach(p -> {
+			if (p.getPosicao()[0] == 0 && p.getPosicao()[1] == 1) {
+				peca = p;
+			}
+		});
+		
+		tabuleiro.verifica(j1, peca);
+		assertTrue(!tabuleiro.getAcionarMovimento()[6][2]);
+		
+		tabuleiro.getPecasBrancas().forEach(p -> {
+			if (p.getPosicao()[0] == 7 && p.getPosicao()[1] == 1) {
+				peca = p;
+			}
+		});
+		
+		tabuleiro.verifica(j1, peca);
+		assertTrue(tabuleiro.getAcionarMovimento()[6][2]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[7][2]);
 		
 	}
 

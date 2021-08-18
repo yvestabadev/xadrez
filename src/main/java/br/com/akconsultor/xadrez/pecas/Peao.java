@@ -1,5 +1,6 @@
 package br.com.akconsultor.xadrez.pecas;
 
+import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
@@ -120,6 +121,8 @@ public class Peao extends Peca implements ProtegeRei {
 			tabuleiro.complementarAmeaca(ameaca);
 
 		}
+		
+		verificaCheck();
 	}
 
 	private void verificaCheck() {
@@ -131,6 +134,7 @@ public class Peao extends Peca implements ProtegeRei {
 			try {
 				if (posicao[0] + 1 == reiPreto[0] && posicao[1] + 1 == reiPreto[1]) {
 					tabuleiro.setPecaAmeaca(this);
+					tabuleiro.adicionarDirecoesCheck(Direcao.DIAGONAL);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 
@@ -138,6 +142,7 @@ public class Peao extends Peca implements ProtegeRei {
 			try {
 				if (posicao[0] - 1 == reiPreto[0] && posicao[1] + 1 == reiPreto[1]) {
 					tabuleiro.setPecaAmeaca(this);
+					tabuleiro.adicionarDirecoesCheck(Direcao.DIAGONAL);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 
@@ -147,6 +152,7 @@ public class Peao extends Peca implements ProtegeRei {
 			try {
 				if (posicao[0] + 1 == reiBranco[0] && posicao[1] - 1 == reiBranco[1]) {
 					tabuleiro.setPecaAmeaca(this);
+					tabuleiro.adicionarDirecoesCheck(Direcao.DIAGONAL);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 
@@ -154,6 +160,7 @@ public class Peao extends Peca implements ProtegeRei {
 			try {
 				if (posicao[0] - 1 == reiBranco[0] && posicao[1] - 1 == reiBranco[1]) {
 					tabuleiro.setPecaAmeaca(this);
+					tabuleiro.adicionarDirecoesCheck(Direcao.DIAGONAL);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 
