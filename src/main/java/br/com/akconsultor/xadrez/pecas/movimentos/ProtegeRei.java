@@ -1,5 +1,6 @@
 package br.com.akconsultor.xadrez.pecas.movimentos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.akconsultor.xadrez.pecas.Peca;
@@ -199,43 +200,22 @@ public interface ProtegeRei {
 	
 	public default boolean[][] naFrenteDoRei(Peca peca, Tabuleiro tabuleiro){
 		boolean[][] podeMover = new boolean[8][8];
-		Direcao direcaoRei;
-		Integer[] reiBranco = tabuleiro.getReiBranco();
-		Integer[] reiPreto = tabuleiro.getReiPreto();
-		Integer[] posicao = peca.getPosicao();
-		Boolean reiAEsquerda = reiBranco[0] < posicao[0];
-		Boolean reiAbaixo = reiBranco[1] < posicao[1];
-		Boolean reiColunaIgual = reiBranco[0] == posicao[0];
-		Boolean reiLinhaIgual = reiBranco[1] == posicao[1];
+		Direcao direcaoProtegida = peca.getDirecaoProtegida();
+		Integer coluna = peca.getPosicao()[0];
+		Integer linha = peca.getPosicao()[1];
+		List<Integer[]> posicoes = new ArrayList<Integer[]>();
+		Peca pecaAdversaria;
 		
-		if(peca.getEhBranca()) {
-			if(reiColunaIgual && reiAbaixo) {
-				direcaoRei = Direcao.TRAS;
-			} else if(reiColunaIgual && !reiAbaixo) {
-				direcaoRei = Direcao.FRENTE;
-			} else if(reiLinhaIgual && reiAEsquerda) {
-				direcaoRei = Direcao.ESQUERDA;
-			} else if(reiLinhaIgual && !reiAEsquerda) {
-				direcaoRei = Direcao.DIREITA;
-			}
-			
-			if(!reiColunaIgual && !reiLinhaIgual) {
-				if(reiAbaixo && reiAEsquerda) {
-					direcaoRei = Direcao.SW;
-				} else if(reiAbaixo && !reiAEsquerda) {
-					direcaoRei = Direcao.SE;
-				} else if(!reiAbaixo && reiAEsquerda) {
-					direcaoRei = Direcao.NW;
-				} else if(!reiAbaixo && !reiAEsquerda) {
-					direcaoRei = Direcao.NE;
+		if(direcaoProtegida != null) {
+			if(direcaoProtegida == Direcao.VERTICAL) {
+				for(int i = linha + 1; i < 8; i++) {
+					posicoes.add(new Integer[]{coluna, i});
+				
 				}
 			}
-		
 		}
 		
-		
-		
-		return podeMover;
+		return null;
 	}
 
 }

@@ -78,6 +78,14 @@ public class Tabuleiro {
 	public boolean[][] getLugaresAmeacados() {
 		return lugaresAmeacados;
 	}
+	
+	public boolean getPosicoes(Boolean ehBranca, Integer coluna, Integer linha) {
+		if(ehBranca) {
+			return posicoesBrancas[coluna][linha];
+		} else {
+			return posicoesPretas[coluna][linha];
+		}
+	}
 
 	public boolean getPosicoesBrancas(Integer coluna, Integer linha) {
 		return posicoesBrancas[coluna][linha];
