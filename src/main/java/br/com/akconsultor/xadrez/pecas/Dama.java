@@ -25,23 +25,29 @@ public class Dama extends Peca implements MoveDiagonal, MoveVerticalEHorizontal,
 	@Override
 	public void verificaDestino() {
 
-		if (tabuleiro.getCheck()) {
-			boolean[][] movimento = moveLado(this, tabuleiro);
-			boolean[][] movimento2 = moveDiagonal(this, tabuleiro);
+		boolean[][] movimento = moveLado(this, tabuleiro);
+		boolean[][] movimento2 = moveDiagonal(this, tabuleiro);
 
-			for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 8; j++) {
-					if (movimento2[i][j]) {
-						movimento[i][j] = true;
-					}
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (movimento2[i][j]) {
+					movimento[i][j] = true;
 				}
 			}
+		}
+
+		if (tabuleiro.getCheck()) {
 
 			boolean[][] destino = corrigeDestino(movimento, this, tabuleiro);
 			tabuleiro.complementarMovimento(destino);
 		} else {
-			tabuleiro.complementarMovimento(moveLado(this, tabuleiro));
-			tabuleiro.complementarMovimento(moveDiagonal(this, tabuleiro));
+			boolean[][] precisaProteger = naoSaiDoRei(movimento, this, tabuleiro);
+
+			if (precisaProteger == null) {
+				tabuleiro.complementarMovimento(movimento);
+			} else {
+				tabuleiro.complementarMovimento(precisaProteger);
+			}
 		}
 
 	}

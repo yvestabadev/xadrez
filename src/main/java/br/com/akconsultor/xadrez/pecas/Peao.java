@@ -25,7 +25,14 @@ public class Peao extends Peca implements ProtegeRei {
 			tabuleiro.complementarMovimento(destino);
 		} else {
 
-			tabuleiro.complementarMovimento(this.movimentoPeao());
+			boolean[][] movimento = this.movimentoPeao();
+			boolean[][] precisaProteger = naoSaiDoRei(movimento, this, tabuleiro);
+
+			if (precisaProteger == null) {
+				tabuleiro.complementarMovimento(this.movimentoPeao());
+			} else {
+				tabuleiro.complementarMovimento(precisaProteger);
+			}
 		}
 	}
 

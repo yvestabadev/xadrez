@@ -5,24 +5,37 @@ import br.com.akconsultor.xadrez.pecas.movimentos.MoveEle;
 import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
-public class Cavalo extends Peca implements MoveEle, ProtegeRei{
-	
+public class Cavalo extends Peca implements MoveEle, ProtegeRei {
+
 	public Cavalo(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
 		super.setTabuleiro(tabuleiro);
 		this.adicionarDirecoes(Direcao.ELE);
-		if(ehBranca) {
+		if (ehBranca) {
 			tabuleiro.setPosicoesBrancas(this, coluna, linha);
 		} else {
 			tabuleiro.setPosicoesPretas(this, coluna, linha);
 		}
-		
+
 	}
 
 	@Override
 	public void verificaDestino() {
-		tabuleiro.complementarMovimento(moveEle(this, tabuleiro));
+		boolean[][] movimento = moveEle(this, tabuleiro);
+
+		if (tabuleiro.getCheck()) {
+			boolean[][] destino = corrigeDestino(movimento, this, tabuleiro);
+			tabuleiro.complementarMovimento(destino);
+		} else {
+			boolean[][] precisaProteger = naoSaiDoRei(movimento, this, tabuleiro);
+
+			if (precisaProteger == null) {
+				tabuleiro.complementarMovimento(moveEle(this, tabuleiro));
+			} else {
+				tabuleiro.complementarMovimento(precisaProteger);
+			}
+		}
 	}
 
 	@Override
@@ -30,7 +43,5 @@ public class Cavalo extends Peca implements MoveEle, ProtegeRei{
 		tabuleiro.complementarAmeaca(moveEle(this, tabuleiro));
 		verificaCheck(this, tabuleiro);
 	}
-	
-	
 
 }

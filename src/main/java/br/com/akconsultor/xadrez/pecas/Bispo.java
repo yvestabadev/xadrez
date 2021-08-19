@@ -23,12 +23,19 @@ public class Bispo extends Peca implements MoveDiagonal, ProtegeRei {
 	@Override
 	public void verificaDestino() {
 		boolean[][] movimento = moveDiagonal(this, tabuleiro);
-		boolean[][] precisaProteger = naoSaiDoRei(movimento, this, tabuleiro);
-
-		if (precisaProteger == null) {
-			tabuleiro.complementarMovimento(moveDiagonal(this, tabuleiro));
+		
+		if (tabuleiro.getCheck()) {
+			boolean[][] destino = corrigeDestino(movimento, this, tabuleiro);
+			tabuleiro.complementarMovimento(destino);
 		} else {
-			tabuleiro.complementarMovimento(precisaProteger);
+			
+			boolean[][] precisaProteger = naoSaiDoRei(movimento, this, tabuleiro);
+
+			if (precisaProteger == null) {
+				tabuleiro.complementarMovimento(movimento);
+			} else {
+				tabuleiro.complementarMovimento(precisaProteger);
+			}
 		}
 
 	}

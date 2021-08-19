@@ -9,7 +9,8 @@ import br.com.akconsultor.xadrez.tabuleiro.Jogador;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
 class BispoNaFrenteDoReiTest {
-
+	/*eh importante  ter um tabuleiro "laranja" para receber as pecas do jogo e um vazio para
+	poder adicionar as pecas que quiser aonde quiser*/ 
 	Tabuleiro nd = new Tabuleiro();
 	Tabuleiro tabuleiro = new Tabuleiro();
 	Jogador j1 = new Jogador("a", true, nd);
