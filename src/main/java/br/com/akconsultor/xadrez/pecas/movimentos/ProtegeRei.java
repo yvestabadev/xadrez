@@ -196,5 +196,46 @@ public interface ProtegeRei {
 		}
 		return podeMover;
 	}
+	
+	public default boolean[][] naFrenteDoRei(Peca peca, Tabuleiro tabuleiro){
+		boolean[][] podeMover = new boolean[8][8];
+		Direcao direcaoRei;
+		Integer[] reiBranco = tabuleiro.getReiBranco();
+		Integer[] reiPreto = tabuleiro.getReiPreto();
+		Integer[] posicao = peca.getPosicao();
+		Boolean reiAEsquerda = reiBranco[0] < posicao[0];
+		Boolean reiAbaixo = reiBranco[1] < posicao[1];
+		Boolean reiColunaIgual = reiBranco[0] == posicao[0];
+		Boolean reiLinhaIgual = reiBranco[1] == posicao[1];
+		
+		if(peca.getEhBranca()) {
+			if(reiColunaIgual && reiAbaixo) {
+				direcaoRei = Direcao.TRAS;
+			} else if(reiColunaIgual && !reiAbaixo) {
+				direcaoRei = Direcao.FRENTE;
+			} else if(reiLinhaIgual && reiAEsquerda) {
+				direcaoRei = Direcao.ESQUERDA;
+			} else if(reiLinhaIgual && !reiAEsquerda) {
+				direcaoRei = Direcao.DIREITA;
+			}
+			
+			if(!reiColunaIgual && !reiLinhaIgual) {
+				if(reiAbaixo && reiAEsquerda) {
+					direcaoRei = Direcao.SW;
+				} else if(reiAbaixo && !reiAEsquerda) {
+					direcaoRei = Direcao.SE;
+				} else if(!reiAbaixo && reiAEsquerda) {
+					direcaoRei = Direcao.NW;
+				} else if(!reiAbaixo && !reiAEsquerda) {
+					direcaoRei = Direcao.NE;
+				}
+			}
+		
+		}
+		
+		
+		
+		return podeMover;
+	}
 
 }

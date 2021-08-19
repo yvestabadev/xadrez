@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.akconsultor.xadrez.pecas.Peca;
+import br.com.akconsultor.xadrez.pecas.Rei;
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 
 public class Tabuleiro {
@@ -19,25 +20,35 @@ public class Tabuleiro {
 	private Boolean check = false;
 	private Integer[] reiBranco = new Integer[2];
 	private Integer[] reiPreto = new Integer[2];
+	private Rei reiBrancoPeca;
+	private Rei reiPretoPeca;
 	private List<Direcao> direcoesCheck = new ArrayList<Direcao>();
 	private Peca pecaAmeaca;
 	
+	public void setReiBrancoPeca(Rei reiBrancoPeca) {
+		this.reiBrancoPeca = reiBrancoPeca;
+	}
+	
+	public void setReiPretoPeca(Rei reiPretoPeca) {
+		this.reiPretoPeca = reiPretoPeca;
+	}
+
 	public void setPecaAmeaca(Peca pecaAmeaca) {
 		this.pecaAmeaca = pecaAmeaca;
 	}
-	
+
 	public Peca getPecaAmeaca() {
 		return pecaAmeaca;
 	}
-	
+
 	private void resetDirecoesCheck() {
 		direcoesCheck.removeAll(direcoesCheck);
 	}
-	
+
 	public List<Direcao> getDirecoesCheck() {
 		return direcoesCheck;
 	}
-	
+
 	public void adicionarDirecoesCheck(Direcao direcao) {
 		this.direcoesCheck.add(direcao);
 	}
@@ -51,11 +62,11 @@ public class Tabuleiro {
 		this.reiPreto[0] = coluna;
 		this.reiPreto[1] = linha;
 	}
-	
+
 	public Integer[] getReiBranco() {
 		return reiBranco;
 	}
-	
+
 	public Integer[] getReiPreto() {
 		return reiPreto;
 	}
@@ -160,10 +171,15 @@ public class Tabuleiro {
 
 			// verifica check
 			this.resetCheck();
-			this.pecasBrancas.forEach(p -> p.ameacaCasas());
+			this.pecasBrancas.forEach(p -> {
+				p.ameacaCasas();
+				p.resetDirecaoProtegida();
+			});
 			if (this.lugaresAmeacados[reiPreto[0]][reiPreto[1]]) {
 				this.check = true;
 			}
+			
+			reiPretoPeca.pedeProtecao();
 
 			this.vezDasBrancas = false;
 
@@ -188,22 +204,27 @@ public class Tabuleiro {
 
 			// verifica check
 			this.resetCheck();
-			this.pecasPretas.forEach(p -> p.ameacaCasas());
+			this.pecasPretas.forEach(p -> {
+				p.ameacaCasas();
+				p.resetDirecaoProtegida();
+			});
 
 			if (this.lugaresAmeacados[reiBranco[0]][reiBranco[1]]) {
 				this.check = true;
 			}
+			
+			reiBrancoPeca.pedeProtecao();
 
 			this.vezDasBrancas = true;
 
 		}
 
 		this.resetAcionarMovimento();
-		
+
 	}
-	
+
 	private void resetCheck() {
-		this.lugaresAmeacados = new boolean[8][8];	
+		this.lugaresAmeacados = new boolean[8][8];
 		this.resetDirecoesCheck();
 		this.pecaAmeaca = null;
 		this.check = false;

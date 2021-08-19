@@ -12,6 +12,19 @@ public abstract class Peca {
 	private Boolean ehBranca;
 	protected List<Direcao> direcoes = new ArrayList<Direcao>();
 	protected Tabuleiro tabuleiro;
+	private Direcao direcaoProtegida;
+	
+	public void resetDirecaoProtegida() {
+		this.direcaoProtegida = null;
+	}
+
+	public Direcao getDirecaoProtegida() {
+		return direcaoProtegida;
+	}
+
+	public void setDirecaoProtegida(Direcao direcaoProtegida) {
+		this.direcaoProtegida = direcaoProtegida;
+	}
 
 	public Tabuleiro getTabuleiro() {
 		return tabuleiro;
