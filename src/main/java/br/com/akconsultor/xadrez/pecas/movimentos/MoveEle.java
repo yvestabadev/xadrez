@@ -10,9 +10,8 @@ public interface MoveEle {
 		boolean[][] podeMover = new boolean[8][8];
 		Integer[] posicao = peca.getPosicao();
 
-		if (peca.getEhBranca()) {
 			try {
-				if (!tabuleiro.getPosicoesBrancas(posicao[0] + 1, posicao[1] + 2)) {
+				if (!tabuleiro.getPosicoes(peca.getEhBranca(),posicao[0] + 1, posicao[1] + 2)) {
 					podeMover[posicao[0] + 1][posicao[1] + 2] = true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -20,7 +19,7 @@ public interface MoveEle {
 			}
 			
 			try {
-				if (!tabuleiro.getPosicoesBrancas(posicao[0] + 2, posicao[1] + 1)) {
+				if (!tabuleiro.getPosicoes(peca.getEhBranca(),posicao[0] + 2, posicao[1] + 1)) {
 					podeMover[posicao[0] + 2][posicao[1] + 1] = true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -28,7 +27,7 @@ public interface MoveEle {
 			}
 			
 			try {
-				if (!tabuleiro.getPosicoesBrancas(posicao[0] - 1, posicao[1] - 2)) {
+				if (!tabuleiro.getPosicoes(peca.getEhBranca(),posicao[0] - 1, posicao[1] - 2)) {
 					podeMover[posicao[0] - 1][posicao[1] - 2] = true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -36,7 +35,7 @@ public interface MoveEle {
 			}
 			
 			try {
-				if (!tabuleiro.getPosicoesBrancas(posicao[0] - 2, posicao[1] - 1)) {
+				if (!tabuleiro.getPosicoes(peca.getEhBranca(),posicao[0] - 2, posicao[1] - 1)) {
 					podeMover[posicao[0] - 2][posicao[1] - 1] = true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -44,7 +43,7 @@ public interface MoveEle {
 			}
 			
 			try {
-				if (!tabuleiro.getPosicoesBrancas(posicao[0] + 1, posicao[1] - 2)) {
+				if (!tabuleiro.getPosicoes(peca.getEhBranca(),posicao[0] + 1, posicao[1] - 2)) {
 					podeMover[posicao[0] + 1][posicao[1] - 2] = true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -52,7 +51,7 @@ public interface MoveEle {
 			}
 			
 			try {
-				if (!tabuleiro.getPosicoesBrancas(posicao[0] + 2, posicao[1] - 1)) {
+				if (!tabuleiro.getPosicoes(peca.getEhBranca(),posicao[0] + 2, posicao[1] - 1)) {
 					podeMover[posicao[0] + 2][posicao[1] - 1] = true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -60,7 +59,7 @@ public interface MoveEle {
 			}
 			
 			try {
-				if (!tabuleiro.getPosicoesBrancas(posicao[0] - 1, posicao[1] + 2)) {
+				if (!tabuleiro.getPosicoes(peca.getEhBranca(),posicao[0] - 1, posicao[1] + 2)) {
 					podeMover[posicao[0] - 1][posicao[1] + 2] = true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -68,77 +67,12 @@ public interface MoveEle {
 			}
 			
 			try {
-				if (!tabuleiro.getPosicoesBrancas(posicao[0] - 2, posicao[1] + 1)) {
+				if (!tabuleiro.getPosicoes(peca.getEhBranca(),posicao[0] - 2, posicao[1] + 1)) {
 					podeMover[posicao[0] - 2][posicao[1] + 1] = true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 
 			}
-		} else {
-			try {
-				if (!tabuleiro.getPosicoesPretas(posicao[0] + 1, posicao[1] + 2)) {
-					podeMover[posicao[0] + 1][posicao[1] + 2] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-
-			}
-			
-			try {
-				if (!tabuleiro.getPosicoesPretas(posicao[0] + 2, posicao[1] + 1)) {
-					podeMover[posicao[0] + 2][posicao[1] + 1] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-
-			}
-			
-			try {
-				if (!tabuleiro.getPosicoesPretas(posicao[0] - 1, posicao[1] - 2)) {
-					podeMover[posicao[0] - 1][posicao[1] - 2] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-
-			}
-			
-			try {
-				if (!tabuleiro.getPosicoesPretas(posicao[0] - 2, posicao[1] - 1)) {
-					podeMover[posicao[0] - 2][posicao[1] - 1] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-
-			}
-			
-			try {
-				if (!tabuleiro.getPosicoesPretas(posicao[0] + 1, posicao[1] - 2)) {
-					podeMover[posicao[0] + 1][posicao[1] - 2] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-
-			}
-			
-			try {
-				if (!tabuleiro.getPosicoesPretas(posicao[0] + 2, posicao[1] - 1)) {
-					podeMover[posicao[0] + 2][posicao[1] - 1] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-
-			}
-			
-			try {
-				if (!tabuleiro.getPosicoesPretas(posicao[0] - 1, posicao[1] + 2)) {
-					podeMover[posicao[0] - 1][posicao[1] + 2] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-
-			}
-			
-			try {
-				if (!tabuleiro.getPosicoesPretas(posicao[0] - 2, posicao[1] + 1)) {
-					podeMover[posicao[0] - 2][posicao[1] + 1] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-
-			}
-		}
 
 		return podeMover;
 

@@ -25,173 +25,97 @@ public interface ProtegeRei {
 
 	public default boolean[][] resolveCheck(Peca peca, Tabuleiro tabuleiro) {
 		boolean[][] podeMover = new boolean[8][8];
-		Integer[] reiBranco = tabuleiro.getReiBranco();
-		Integer[] reiPreto = tabuleiro.getReiPreto();
+		Integer[] rei;
 		Integer[] pecaAmeaca = tabuleiro.getPecaAmeaca().getPosicao();
 		List<Direcao> direcoes = tabuleiro.getDirecoesCheck();
+		
+		if(peca.getEhBranca()) {
+			rei = tabuleiro.getReiBranco();
+		} else {
+			rei = tabuleiro.getReiPreto();
+		}
 
 		if (tabuleiro.getDirecoesCheck().size() == 1) {
-			if (peca.getEhBranca()) {
+			
 
 				Direcao direcao = direcoes.get(0);
 				if (direcao == Direcao.NE) {
-					for (int i = reiBranco[0] - 1; i >= 0; i--) {
-						int j = reiBranco[1] + (i - reiBranco[0]);
+					for (int i = rei[0] - 1; i >= 0; i--) {
+						int j = rei[1] + (i - rei[0]);
 						podeMover[i][j] = true;
-						if (tabuleiro.getPosicoesPretas(i, j)) {
+						if (tabuleiro.getPosicoes(!peca.getEhBranca(),i, j)) {
 							break;
 						}
 
 					}
 				} else if (direcao == Direcao.NW) {
-					for (int i = reiBranco[0] + 1; i < 8; i++) {
-						int j = reiBranco[1] - (i - reiBranco[0]);
+					for (int i = rei[0] + 1; i < 8; i++) {
+						int j = rei[1] - (i - rei[0]);
 						podeMover[i][j] = true;
-						if (tabuleiro.getPosicoesPretas(i, j)) {
+						if (tabuleiro.getPosicoes(!peca.getEhBranca(),i, j)) {
 							break;
 						}
 
 					}
 
 				} else if (direcao == Direcao.SE) {
-					for (int i = reiBranco[0] - 1; i >= 0; i--) {
-						int j = reiBranco[1] - (i - reiBranco[0]);
+					for (int i = rei[0] - 1; i >= 0; i--) {
+						int j = rei[1] - (i - rei[0]);
 						podeMover[i][j] = true;
-						if (tabuleiro.getPosicoesPretas(i, j)) {
+						if (tabuleiro.getPosicoes(!peca.getEhBranca(),i, j)) {
 							break;
 						}
 
 					}
 
 				} else if (direcao == Direcao.SW) {
-					for (int i = reiBranco[0] + 1; i < 8; i++) {
-						int j = reiBranco[1] + (i - reiBranco[0]);
+					for (int i = rei[0] + 1; i < 8; i++) {
+						int j = rei[1] + (i - rei[0]);
 						podeMover[i][j] = true;
-						if (tabuleiro.getPosicoesPretas(i, j)) {
+						if (tabuleiro.getPosicoes(!peca.getEhBranca(),i, j)) {
 							break;
 						}
 
 					}
 
 				} else if (direcao == Direcao.TRAS) {
-					for (int i = reiBranco[1] + 1; i < 8; i++) {
-						int coluna = reiBranco[0];
+					for (int i = rei[1] + 1; i < 8; i++) {
+						int coluna = rei[0];
 						podeMover[coluna][i] = true;
-						if (tabuleiro.getPosicoesPretas(coluna, i)) {
+						if (tabuleiro.getPosicoes(!peca.getEhBranca(),coluna, i)) {
 							break;
 						}
 					}
 
 				} else if (direcao == Direcao.FRENTE) {
-					for (int i = reiBranco[1] - 1; i >= 0; i--) {
-						int coluna = reiBranco[0];
+					for (int i = rei[1] - 1; i >= 0; i--) {
+						int coluna = rei[0];
 						podeMover[coluna][i] = true;
-						if (tabuleiro.getPosicoesPretas(coluna, i)) {
+						if (tabuleiro.getPosicoes(!peca.getEhBranca(),coluna, i)) {
 							break;
 						}
 					}
 
 				} else if (direcao == Direcao.ESQUERDA) {
-					for (int i = reiBranco[0] + 1; i < 8; i++) {
-						int linha = reiBranco[1];
+					for (int i = rei[0] + 1; i < 8; i++) {
+						int linha = rei[1];
 						podeMover[i][linha] = true;
-						if (tabuleiro.getPosicoesPretas(i, linha)) {
+						if (tabuleiro.getPosicoes(!peca.getEhBranca(),i, linha)) {
 							break;
 						}
 					}
 
 				} else if (direcao == Direcao.DIREITA) {
-					for (int i = reiBranco[0] - 1; i >= 0; i--) {
-						int linha = reiBranco[1];
+					for (int i = rei[0] - 1; i >= 0; i--) {
+						int linha = rei[1];
 						podeMover[i][linha] = true;
-						if (tabuleiro.getPosicoesPretas(i, linha)) {
+						if (tabuleiro.getPosicoes(!peca.getEhBranca(),i, linha)) {
 							break;
 						}
 					}
 
 				}
-			}
-
-			else {
-
-				Direcao direcao = direcoes.get(0);
-				if (direcao == Direcao.NE) {
-					for (int i = reiPreto[0] - 1; i >= 0; i--) {
-						int j = reiPreto[1] + (i - reiPreto[0]);
-						podeMover[i][j] = true;
-						if (tabuleiro.getPosicoesPretas(i, j)) {
-							break;
-						}
-
-					}
-				} else if (direcao == Direcao.NW) {
-					for (int i = reiPreto[0] + 1; i < 8; i++) {
-						int j = reiPreto[1] - (i - reiPreto[0]);
-						podeMover[i][j] = true;
-						if (tabuleiro.getPosicoesPretas(i, j)) {
-							break;
-						}
-
-					}
-
-				} else if (direcao == Direcao.SE) {
-					for (int i = reiPreto[0] - 1; i >= 0; i--) {
-						int j = reiPreto[1] - (i - reiPreto[0]);
-						podeMover[i][j] = true;
-						if (tabuleiro.getPosicoesPretas(i, j)) {
-							break;
-						}
-
-					}
-
-				} else if (direcao == Direcao.SW) {
-					for (int i = reiPreto[0] + 1; i < 8; i++) {
-						int j = reiPreto[1] + (i - reiPreto[0]);
-						podeMover[i][j] = true;
-						if (tabuleiro.getPosicoesPretas(i, j)) {
-							break;
-						}
-
-					}
-
-				} else if (direcao == Direcao.TRAS) {
-					for (int i = reiPreto[1] + 1; i < 8; i++) {
-						int coluna = reiPreto[0];
-						podeMover[coluna][i] = true;
-						if (tabuleiro.getPosicoesPretas(coluna, i)) {
-							break;
-						}
-					}
-
-				} else if (direcao == Direcao.FRENTE) {
-					for (int i = reiPreto[1] - 1; i >= 0; i--) {
-						int coluna = reiPreto[0];
-						podeMover[coluna][i] = true;
-						if (tabuleiro.getPosicoesPretas(coluna, i)) {
-							break;
-						}
-					}
-
-				} else if (direcao == Direcao.ESQUERDA) {
-					for (int i = reiPreto[0] + 1; i < 8; i++) {
-						int linha = reiPreto[1];
-						podeMover[i][linha] = true;
-						if (tabuleiro.getPosicoesPretas(i, linha)) {
-							break;
-						}
-					}
-
-				} else if (direcao == Direcao.DIREITA) {
-					for (int i = reiPreto[0] - 1; i >= 0; i--) {
-						int linha = reiPreto[1];
-						podeMover[i][linha] = true;
-						if (tabuleiro.getPosicoesPretas(i, linha)) {
-							break;
-						}
-					}
-
-				}
-			}
+			
 			
 			podeMover[pecaAmeaca[0]][pecaAmeaca[1]] = true;
 		}

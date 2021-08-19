@@ -23,12 +23,12 @@ public class Cavalo extends Peca implements MoveEle, ProtegeRei{
 	@Override
 	public void verificaDestino() {
 		tabuleiro.complementarMovimento(moveEle(this, tabuleiro));
-		verificaCheck(this, tabuleiro);
 	}
 
 	@Override
 	public void ameacaCasas() {
 		tabuleiro.complementarAmeaca(moveEle(this, tabuleiro));
+		verificaCheck(this, tabuleiro);
 	}
 	
 	

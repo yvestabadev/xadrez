@@ -56,199 +56,110 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 	}
 
 	public void pedeProtecao() {
-		if (this.getEhBranca()) {
-			for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
-				int j = this.getPosicao()[1];
-				if (tabuleiro.getPosicoesBrancas(i, j)) {
-					Peca peca = this.encontraPeca(true, i, j);
-					peca.setDirecaoProtegida(Direcao.HORIZONTAL);
-				} else if(tabuleiro.getPosicoesPretas(i, j)) {
+
+		for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
+			int j = this.getPosicao()[1];
+			if (tabuleiro.getPosicoes(this.getEhBranca(), i, j)) {
+				Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
+				peca.setDirecaoProtegida(Direcao.HORIZONTAL);
+				break;
+			} else if (tabuleiro.getPosicoes(!this.getEhBranca(), i, j)) {
+				break;
+			}
+		}
+
+		for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
+			int j = this.getPosicao()[1];
+			if (tabuleiro.getPosicoes(this.getEhBranca(), i, j)) {
+				Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
+				peca.setDirecaoProtegida(Direcao.HORIZONTAL);
+				break;
+			} else if (tabuleiro.getPosicoes(!this.getEhBranca(), i, j)) {
+				break;
+			}
+		}
+
+		for (int i = this.getPosicao()[1] - 1; i >= 0; i--) {
+			int j = this.getPosicao()[0];
+			if (tabuleiro.getPosicoes(this.getEhBranca(),j, i)) {
+				Peca peca = this.encontraPeca(this.getEhBranca(), j, i);
+				peca.setDirecaoProtegida(Direcao.VERTICAL);
+				break;
+			} else if (tabuleiro.getPosicoes(!this.getEhBranca(),j, i)) {
+				break;
+			}
+		}
+
+		for (int i = this.getPosicao()[1] + 1; i < 8; i++) {
+			int j = this.getPosicao()[0];
+			if (tabuleiro.getPosicoes(this.getEhBranca(),j, i)) {
+				Peca peca = this.encontraPeca(this.getEhBranca(), j, i);
+				peca.setDirecaoProtegida(Direcao.VERTICAL);
+				break;
+			} else if (tabuleiro.getPosicoes(!this.getEhBranca(), j, i)) {
+				break;
+			}
+		}
+
+		for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
+			int j = this.getPosicao()[1] + (i - this.getPosicao()[0]);
+			try {
+				if (tabuleiro.getPosicoes(this.getEhBranca(),i, j)) {
+					Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
+					peca.setDirecaoProtegida(Direcao.NESW);
+					break;
+				} else if (tabuleiro.getPosicoes(!this.getEhBranca(),i, j)) {
 					break;
 				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				break;
 			}
-			
-			for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
-				int j = this.getPosicao()[1];
-				if (tabuleiro.getPosicoesBrancas(i, j)) {
-					Peca peca = this.encontraPeca(true, i, j);
-					peca.setDirecaoProtegida(Direcao.HORIZONTAL);
-				} else if(tabuleiro.getPosicoesPretas(i, j)) {
+		}
+
+		for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
+			int j = this.getPosicao()[1] + (i - this.getPosicao()[0]);
+			try {
+				if (tabuleiro.getPosicoes(this.getEhBranca(),i, j)) {
+					Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
+					peca.setDirecaoProtegida(Direcao.NESW);
+					break;
+				} else if (tabuleiro.getPosicoes(!this.getEhBranca(),i, j)) {
 					break;
 				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				break;
 			}
-			
-			for (int i = this.getPosicao()[1] - 1; i >= 0; i--) {
-				int j = this.getPosicao()[0];
-				if (tabuleiro.getPosicoesBrancas(j, i)) {
-					Peca peca = this.encontraPeca(true, j, i);
-					peca.setDirecaoProtegida(Direcao.VERTICAL);
-				} else if(tabuleiro.getPosicoesPretas(j, i)) {
+		}
+
+		for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
+			int j = this.getPosicao()[1] - (i - this.getPosicao()[0]);
+			try {
+				if (tabuleiro.getPosicoes(this.getEhBranca(),i, j)) {
+					Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
+					peca.setDirecaoProtegida(Direcao.NWSE);
+					break;
+				} else if (tabuleiro.getPosicoes(!this.getEhBranca(),i, j)) {
 					break;
 				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				break;
 			}
-			
-			for (int i = this.getPosicao()[1] + 1; i < 8 ; i++) {
-				int j = this.getPosicao()[0];
-				if (tabuleiro.getPosicoesBrancas(j, i)) {
-					Peca peca = this.encontraPeca(true, j, i);
-					peca.setDirecaoProtegida(Direcao.VERTICAL);
-				} else if(tabuleiro.getPosicoesPretas(j, i)) {
+		}
+
+		for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
+			int j = this.getPosicao()[1] - (i - this.getPosicao()[0]);
+			try {
+				if (tabuleiro.getPosicoes(this.getEhBranca(),i, j)) {
+					Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
+					peca.setDirecaoProtegida(Direcao.NWSE);
+					break;
+				} else if (tabuleiro.getPosicoes(!this.getEhBranca(),i, j)) {
 					break;
 				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				break;
 			}
-			
-			for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
-				int j = this.getPosicao()[1] + (i - this.getPosicao()[0]);
-				try {
-					if (tabuleiro.getPosicoesBrancas(i, j)) {
-						Peca peca = this.encontraPeca(true, i, j);
-						peca.setDirecaoProtegida(Direcao.NESW);
-					} else if(tabuleiro.getPosicoesPretas(i, j)) {
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
-				int j = this.getPosicao()[1] + (i - this.getPosicao()[0]);
-				try {
-					if (tabuleiro.getPosicoesBrancas(i, j)) {
-						Peca peca = this.encontraPeca(true, i, j);
-						peca.setDirecaoProtegida(Direcao.NESW);
-					} else if(tabuleiro.getPosicoesPretas(i, j)) {
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
-				int j = this.getPosicao()[1] - (i - this.getPosicao()[0]);
-				try {
-					if (tabuleiro.getPosicoesBrancas(i, j)) {
-						Peca peca = this.encontraPeca(true, i, j);
-						peca.setDirecaoProtegida(Direcao.NWSE);
-					} else if(tabuleiro.getPosicoesPretas(i, j)) {
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
-				int j = this.getPosicao()[1] - (i - this.getPosicao()[0]);
-				try {
-					if (tabuleiro.getPosicoesBrancas(i, j)) {
-						Peca peca = this.encontraPeca(true, i, j);
-						peca.setDirecaoProtegida(Direcao.NWSE);
-					} else if(tabuleiro.getPosicoesPretas(i, j)) {
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					break;
-				}
-			}
-		} else {
-			for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
-				int j = this.getPosicao()[1];
-				if (tabuleiro.getPosicoesPretas(i, j)) {
-					Peca peca = this.encontraPeca(false, i, j);
-					peca.setDirecaoProtegida(Direcao.HORIZONTAL);
-				} else if(tabuleiro.getPosicoesBrancas(i, j)) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
-				int j = this.getPosicao()[1];
-				if (tabuleiro.getPosicoesPretas(i, j)) {
-					Peca peca = this.encontraPeca(false, i, j);
-					peca.setDirecaoProtegida(Direcao.HORIZONTAL);
-				} else if(tabuleiro.getPosicoesBrancas(i, j)) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[1] - 1; i >= 0; i--) {
-				int j = this.getPosicao()[0];
-				if (tabuleiro.getPosicoesPretas(j, i)) {
-					Peca peca = this.encontraPeca(false, j, i);
-					peca.setDirecaoProtegida(Direcao.VERTICAL);
-				} else if(tabuleiro.getPosicoesBrancas(j, i)) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[1] + 1; i < 8 ; i++) {
-				int j = this.getPosicao()[0];
-				if (tabuleiro.getPosicoesPretas(j, i)) {
-					Peca peca = this.encontraPeca(false, j, i);
-					peca.setDirecaoProtegida(Direcao.VERTICAL);
-				} else if(tabuleiro.getPosicoesBrancas(j, i)) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
-				int j = this.getPosicao()[1] + (i - this.getPosicao()[0]);
-				try {
-					if (tabuleiro.getPosicoesPretas(i, j)) {
-						Peca peca = this.encontraPeca(false, i, j);
-						peca.setDirecaoProtegida(Direcao.NESW);
-					} else if(tabuleiro.getPosicoesBrancas(i, j)) {
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
-				int j = this.getPosicao()[1] + (i - this.getPosicao()[0]);
-				try {
-					if (tabuleiro.getPosicoesPretas(i, j)) {
-						Peca peca = this.encontraPeca(false, i, j);
-						peca.setDirecaoProtegida(Direcao.NESW);
-					} else if(tabuleiro.getPosicoesBrancas(i, j)) {
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[0] + 1; i < 8; i++) {
-				int j = this.getPosicao()[1] - (i - this.getPosicao()[0]);
-				try {
-					if (tabuleiro.getPosicoesPretas(i, j)) {
-						Peca peca = this.encontraPeca(false, i, j);
-						peca.setDirecaoProtegida(Direcao.NWSE);
-					} else if(tabuleiro.getPosicoesBrancas(i, j)) {
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					break;
-				}
-			}
-			
-			for (int i = this.getPosicao()[0] - 1; i >= 0; i--) {
-				int j = this.getPosicao()[1] - (i - this.getPosicao()[0]);
-				try {
-					if (tabuleiro.getPosicoesPretas(i, j)) {
-						Peca peca = this.encontraPeca(false, i, j);
-						peca.setDirecaoProtegida(Direcao.NWSE);
-					} else if(tabuleiro.getPosicoesBrancas(i, j)) {
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					break;
-				}
-			}
-			
+
 		}
 
 	}

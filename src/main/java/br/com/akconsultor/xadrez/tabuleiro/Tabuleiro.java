@@ -87,17 +87,17 @@ public class Tabuleiro {
 		}
 	}
 
-	public boolean getPosicoesBrancas(Integer coluna, Integer linha) {
-		return posicoesBrancas[coluna][linha];
-	}
+//	public boolean getPosicoesBrancas(Integer coluna, Integer linha) {
+//		return posicoesBrancas[coluna][linha];
+//	}
 
 	public void setPosicoesBrancas(Peca peca, Integer coluna, Integer linha) {
 		this.posicoesBrancas[coluna][linha] = true;
 	}
 
-	public boolean getPosicoesPretas(Integer coluna, Integer linha) {
-		return posicoesPretas[coluna][linha];
-	}
+//	public boolean getPosicoesPretas(Integer coluna, Integer linha) {
+//		return posicoesPretas[coluna][linha];
+//	}
 
 	public void setPosicoesPretas(Peca peca, Integer coluna, Integer linha) {
 		this.posicoesPretas[coluna][linha] = true;

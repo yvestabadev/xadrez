@@ -34,7 +34,7 @@ class CheckTest {
 		tabuleiro.verifica(j1, peaoBranco);
 		tabuleiro.move(j1, peaoBranco, 2, 2);
 		
-		assertTrue(tabuleiro.getPosicoesBrancas(2, 2));
+		assertTrue(tabuleiro.getPosicoes(true, 2, 2));
 		assertTrue(tabuleiro.getReiPreto()[0] == 3 && tabuleiro.getReiPreto()[1] == 3);
 		assertTrue(tabuleiro.getCheck());
 		
