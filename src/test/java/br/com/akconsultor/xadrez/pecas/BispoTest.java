@@ -63,5 +63,6 @@ class BispoTest {
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][3]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[2][2]);
 	}
+	
 
 }

@@ -24,11 +24,11 @@ public class Tabuleiro {
 	private Rei reiPretoPeca;
 	private List<Direcao> direcoesCheck = new ArrayList<Direcao>();
 	private Peca pecaAmeaca;
-	
+
 	public void setReiBrancoPeca(Rei reiBrancoPeca) {
 		this.reiBrancoPeca = reiBrancoPeca;
 	}
-	
+
 	public void setReiPretoPeca(Rei reiPretoPeca) {
 		this.reiPretoPeca = reiPretoPeca;
 	}
@@ -78,9 +78,9 @@ public class Tabuleiro {
 	public boolean[][] getLugaresAmeacados() {
 		return lugaresAmeacados;
 	}
-	
+
 	public boolean getPosicoes(Boolean ehBranca, Integer coluna, Integer linha) {
-		if(ehBranca) {
+		if (ehBranca) {
 			return posicoesBrancas[coluna][linha];
 		} else {
 			return posicoesPretas[coluna][linha];
@@ -186,7 +186,7 @@ public class Tabuleiro {
 			if (this.lugaresAmeacados[reiPreto[0]][reiPreto[1]]) {
 				this.check = true;
 			}
-			
+
 			reiPretoPeca.pedeProtecao();
 
 			this.vezDasBrancas = false;
@@ -220,7 +220,7 @@ public class Tabuleiro {
 			if (this.lugaresAmeacados[reiBranco[0]][reiBranco[1]]) {
 				this.check = true;
 			}
-			
+
 			reiBrancoPeca.pedeProtecao();
 
 			this.vezDasBrancas = true;
@@ -236,6 +236,24 @@ public class Tabuleiro {
 		this.resetDirecoesCheck();
 		this.pecaAmeaca = null;
 		this.check = false;
+	}
+
+	public Peca encontrarPeca(Boolean ehBranca, Integer coluna, Integer linha) {
+		List<Peca> pecas;
+		if (ehBranca) {
+			pecas = this.pecasBrancas;
+		} else {
+			pecas = this.pecasPretas;
+		}
+		
+		for (Peca p : pecas) {
+			if (p.getPosicao()[0] == coluna && p.getPosicao()[1] == linha) {
+				return p;
+			}
+		}
+		
+		return null;
+
 	}
 
 }

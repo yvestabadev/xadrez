@@ -1,6 +1,5 @@
 package br.com.akconsultor.xadrez.pecas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
@@ -61,7 +60,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 			int j = this.getPosicao()[1];
 			if (tabuleiro.getPosicoes(this.getEhBranca(), i, j)) {
 				Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
-				peca.setDirecaoProtegida(Direcao.HORIZONTAL);
+				peca.setDirecaoProtegida(Direcao.DIREITA);
 				break;
 			} else if (tabuleiro.getPosicoes(!this.getEhBranca(), i, j)) {
 				break;
@@ -72,7 +71,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 			int j = this.getPosicao()[1];
 			if (tabuleiro.getPosicoes(this.getEhBranca(), i, j)) {
 				Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
-				peca.setDirecaoProtegida(Direcao.HORIZONTAL);
+				peca.setDirecaoProtegida(Direcao.ESQUERDA);
 				break;
 			} else if (tabuleiro.getPosicoes(!this.getEhBranca(), i, j)) {
 				break;
@@ -83,7 +82,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 			int j = this.getPosicao()[0];
 			if (tabuleiro.getPosicoes(this.getEhBranca(),j, i)) {
 				Peca peca = this.encontraPeca(this.getEhBranca(), j, i);
-				peca.setDirecaoProtegida(Direcao.VERTICAL);
+				peca.setDirecaoProtegida(Direcao.TRAS);
 				break;
 			} else if (tabuleiro.getPosicoes(!this.getEhBranca(),j, i)) {
 				break;
@@ -94,7 +93,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 			int j = this.getPosicao()[0];
 			if (tabuleiro.getPosicoes(this.getEhBranca(),j, i)) {
 				Peca peca = this.encontraPeca(this.getEhBranca(), j, i);
-				peca.setDirecaoProtegida(Direcao.VERTICAL);
+				peca.setDirecaoProtegida(Direcao.FRENTE);
 				break;
 			} else if (tabuleiro.getPosicoes(!this.getEhBranca(), j, i)) {
 				break;
@@ -106,7 +105,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 			try {
 				if (tabuleiro.getPosicoes(this.getEhBranca(),i, j)) {
 					Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
-					peca.setDirecaoProtegida(Direcao.NESW);
+					peca.setDirecaoProtegida(Direcao.NE);
 					break;
 				} else if (tabuleiro.getPosicoes(!this.getEhBranca(),i, j)) {
 					break;
@@ -121,7 +120,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 			try {
 				if (tabuleiro.getPosicoes(this.getEhBranca(),i, j)) {
 					Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
-					peca.setDirecaoProtegida(Direcao.NESW);
+					peca.setDirecaoProtegida(Direcao.SW);
 					break;
 				} else if (tabuleiro.getPosicoes(!this.getEhBranca(),i, j)) {
 					break;
@@ -136,7 +135,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 			try {
 				if (tabuleiro.getPosicoes(this.getEhBranca(),i, j)) {
 					Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
-					peca.setDirecaoProtegida(Direcao.NWSE);
+					peca.setDirecaoProtegida(Direcao.SE);
 					break;
 				} else if (tabuleiro.getPosicoes(!this.getEhBranca(),i, j)) {
 					break;
@@ -151,7 +150,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 			try {
 				if (tabuleiro.getPosicoes(this.getEhBranca(),i, j)) {
 					Peca peca = this.encontraPeca(this.getEhBranca(), i, j);
-					peca.setDirecaoProtegida(Direcao.NWSE);
+					peca.setDirecaoProtegida(Direcao.NW);
 					break;
 				} else if (tabuleiro.getPosicoes(!this.getEhBranca(),i, j)) {
 					break;
