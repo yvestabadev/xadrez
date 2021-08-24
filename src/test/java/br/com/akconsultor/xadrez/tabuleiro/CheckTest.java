@@ -51,5 +51,29 @@ class CheckTest {
 		}
 		
 	}
+	
+	@Test
+	void peaoPassaNaFrenteDaDamaEReiNaoPodeEntrarEmCheckComOProprioMovimento() {
+		tabuleiro.verifica(j1, reiBranco);
+		tabuleiro.move(j1, reiBranco, 0, 1);
+		
+		tabuleiro.verifica(j2, damaPreta);
+		tabuleiro.move(j2, damaPreta, 3, 2);
+		
+		tabuleiro.verifica(j1, reiBranco);
+		//rei nao pode entrar em check com o proprio movimento
+		assertTrue(!tabuleiro.getAcionarMovimento()[0][2]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[1][2]);
+		
+		tabuleiro.move(j1, reiBranco, 1, 1);
+		
+		tabuleiro.verifica(j2, damaPreta);
+		tabuleiro.move(j2, damaPreta, 3, 1);
+		
+		tabuleiro.verifica(j1, peaoBranco);
+		//peao nao sai da frente do rei
+		assertTrue(!tabuleiro.getAcionarMovimento()[2][2]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[2][3]);
+	}
 
 }

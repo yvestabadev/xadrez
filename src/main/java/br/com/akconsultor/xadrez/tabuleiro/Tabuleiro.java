@@ -3,8 +3,12 @@ package br.com.akconsultor.xadrez.tabuleiro;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.akconsultor.xadrez.pecas.Bispo;
+import br.com.akconsultor.xadrez.pecas.Cavalo;
+import br.com.akconsultor.xadrez.pecas.Dama;
 import br.com.akconsultor.xadrez.pecas.Peca;
 import br.com.akconsultor.xadrez.pecas.Rei;
+import br.com.akconsultor.xadrez.pecas.Torre;
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 
 public class Tabuleiro {
@@ -24,6 +28,50 @@ public class Tabuleiro {
 	private Rei reiPretoPeca;
 	private List<Direcao> direcoesCheck = new ArrayList<Direcao>();
 	private Peca pecaAmeaca;
+	
+	private Boolean roquePequenoPreto = true;
+	private Boolean roquePequenoBranco = true;
+	private Boolean roqueGrandePreto = true;
+	private Boolean roqueGrandeBranco = true;
+	
+	private Boolean atencaoRoquePequenoPreto = false;
+	private Boolean atencaoRoquePequenoBranco = false;
+	private Boolean atencaoRoqueGrandePreto = false;
+	private Boolean atencaoRoqueGrandeBranco = false;
+	
+	
+	
+	public Boolean getAtencaoRoquePequenoPreto() {
+		return atencaoRoquePequenoPreto;
+	}
+
+	public void setAtencaoRoquePequenoPreto(Boolean atencaoRoquePequenoPreto) {
+		this.atencaoRoquePequenoPreto = atencaoRoquePequenoPreto;
+	}
+
+	public Boolean getAtencaoRoquePequenoBranco() {
+		return atencaoRoquePequenoBranco;
+	}
+
+	public void setAtencaoRoquePequenoBranco(Boolean atencaoRoquePequenoBranco) {
+		this.atencaoRoquePequenoBranco = atencaoRoquePequenoBranco;
+	}
+
+	public Boolean getAtencaoRoqueGrandePreto() {
+		return atencaoRoqueGrandePreto;
+	}
+
+	public void setAtencaoRoqueGrandePreto(Boolean atencaoRoqueGrandePreto) {
+		this.atencaoRoqueGrandePreto = atencaoRoqueGrandePreto;
+	}
+
+	public Boolean getAtencaoRoqueGrandeBranco() {
+		return atencaoRoqueGrandeBranco;
+	}
+
+	public void setAtencaoRoqueGrandeBranco(Boolean atencaoRoqueGrandeBranco) {
+		this.atencaoRoqueGrandeBranco = atencaoRoqueGrandeBranco;
+	}
 
 	public void setReiBrancoPeca(Rei reiBrancoPeca) {
 		this.reiBrancoPeca = reiBrancoPeca;
@@ -109,6 +157,10 @@ public class Tabuleiro {
 
 	public void resetAcionarMovimento() {
 		this.acionarMovimento = new boolean[8][8];
+		atencaoRoqueGrandeBranco = false;
+		atencaoRoqueGrandePreto = false;
+		atencaoRoquePequenoBranco = false;
+		atencaoRoquePequenoPreto = false;
 	}
 
 	public List<Peca> getPecasBrancas() {
@@ -161,6 +213,18 @@ public class Tabuleiro {
 			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 			peca.setPosicao(coluna, linha);
 			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
+			
+			if(atencaoRoqueGrandeBranco && coluna == 2 && linha == 0) {
+				Peca torre = this.encontrarPeca(true, 0, 0);
+				this.posicoesBrancas[0][0] = false;
+				torre.setPosicao(3, 0);
+				this.posicoesBrancas[3][0] = true;
+			} else if(atencaoRoquePequenoBranco && coluna == 6 && linha == 0) {
+				Peca torre = this.encontrarPeca(true, 0, 0);
+				this.posicoesBrancas[7][0] = false;
+				torre.setPosicao(5, 0);
+				this.posicoesBrancas[5][0] = true;
+			}
 
 			// verifica captura
 
@@ -195,6 +259,18 @@ public class Tabuleiro {
 			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 			peca.setPosicao(coluna, linha);
 			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
+			
+			if(atencaoRoqueGrandePreto && coluna == 2 && linha == 7) {
+				Peca torre = this.encontrarPeca(false, 0, 7);
+				this.posicoesPretas[0][7] = false;
+				torre.setPosicao(3, 7);
+				this.posicoesPretas[3][7] = true;
+			} else if(atencaoRoquePequenoPreto && coluna == 6 && linha == 7) {
+				Peca torre = this.encontrarPeca(false, 7, 7);
+				this.posicoesPretas[7][7] = false;
+				torre.setPosicao(5, 7);
+				this.posicoesPretas[5][7] = true;
+			}
 
 			// verifica captura
 			this.pecasBrancas.forEach(adversario -> {
@@ -254,6 +330,76 @@ public class Tabuleiro {
 		
 		return null;
 
+	}
+
+	public boolean getRoqueGrande(Boolean ehBranca) {
+		if(ehBranca) {
+			return this.roqueGrandeBranco;
+		} else {
+			return this.roqueGrandePreto;
+		}
+	}
+	
+	public boolean getRoquePequeno(Boolean ehBranca) {
+		if(ehBranca) {
+			return this.roquePequenoBranco;
+		} else {
+			return this.roquePequenoPreto;
+		}
+	}
+	
+	public void invalidaRoqueGrande(Boolean ehBranca) {
+		if(ehBranca) {
+			this.roqueGrandeBranco = false;
+		} else {
+			this.roqueGrandePreto = false;
+		}
+	}
+	
+	public void invalidaRoquePequeno(Boolean ehBranca) {
+		if(ehBranca) {
+			this.roquePequenoBranco = false;
+		} else {
+			this.roquePequenoPreto = false;
+		}
+	}
+	
+	public void promovePeao(Peca peca, Class<? extends Peca> p) {
+		Integer[] posicaoPeca = peca.getPosicao();
+		Peca novaPeca;
+		if(peca.getEhBranca()) {
+			this.pecasBrancas.remove(peca);
+			if(p == Dama.class) {
+				novaPeca = new Dama(true, posicaoPeca[0], posicaoPeca[1], this);
+				this.getPecasBrancas().add(novaPeca);
+			} else if(p == Cavalo.class) {
+				novaPeca = new Cavalo(true, posicaoPeca[0], posicaoPeca[1], this);
+				this.getPecasBrancas().add(novaPeca);
+			} else if(p == Torre.class) {
+				novaPeca = new Torre(true, posicaoPeca[0], posicaoPeca[1], this);
+				this.getPecasBrancas().add(novaPeca);
+			} else {
+				novaPeca = new Bispo(true, posicaoPeca[0], posicaoPeca[1], this);
+				this.getPecasBrancas().add(novaPeca);
+			}
+		} else {
+			this.pecasPretas.remove(peca);
+			if(p == Dama.class) {
+				novaPeca = new Dama(false, posicaoPeca[0], posicaoPeca[1], this);
+				this.getPecasPretas().add(novaPeca);
+			} else if(p == Cavalo.class) {
+				novaPeca = new Cavalo(false, posicaoPeca[0], posicaoPeca[1], this);
+				this.getPecasPretas().add(novaPeca);
+			} else if(p == Torre.class) {
+				novaPeca = new Torre(false, posicaoPeca[0], posicaoPeca[1], this);
+				this.getPecasPretas().add(novaPeca);
+			} else {
+				novaPeca = new Bispo(false, posicaoPeca[0], posicaoPeca[1], this);
+				this.getPecasPretas().add(novaPeca);
+			}
+		}
+		
+		
 	}
 
 }

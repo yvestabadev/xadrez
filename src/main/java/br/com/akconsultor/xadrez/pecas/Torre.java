@@ -7,6 +7,8 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
 public class Torre extends Peca implements MoveVerticalEHorizontal, ProtegeRei {
 
+	private Integer[] posicaoInicial;
+
 	public Torre(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
 		super.setPosicao(coluna, linha);
@@ -17,6 +19,8 @@ public class Torre extends Peca implements MoveVerticalEHorizontal, ProtegeRei {
 		} else {
 			tabuleiro.setPosicoesPretas(this, coluna, linha);
 		}
+		
+		this.posicaoInicial = new Integer[] {coluna, linha};
 
 	}
 
@@ -42,6 +46,31 @@ public class Torre extends Peca implements MoveVerticalEHorizontal, ProtegeRei {
 	public void ameacaCasas() {
 		tabuleiro.complementarAmeaca(moveLado(this, tabuleiro));
 		verificaCheckLado(this, tabuleiro);
+
+		Integer[] posicaoInicialGrande;
+
+		if (super.getEhBranca()) {
+			posicaoInicialGrande = new Integer[] { 0, 0 };
+		} else {
+			posicaoInicialGrande = new Integer[] { 0, 7 };
+		}
+		
+		boolean ehGrande = posicaoInicialGrande == this.posicaoInicial;
+		
+		//essa parte do codigo esta com problemas porque nao esta entrando no segundo if
+		if (tabuleiro.getRoqueGrande(super.getEhBranca()) && ehGrande) {
+			if (this.posicaoInicial[0] != super.getPosicao()[0] ||
+					this.posicaoInicial[1] != super.getPosicao()[1]) {
+				tabuleiro.invalidaRoqueGrande(super.getEhBranca());
+			}
+		}
+
+		if (tabuleiro.getRoquePequeno(super.getEhBranca()) && !ehGrande) {
+			if (this.posicaoInicial[0] != super.getPosicao()[0] ||
+					this.posicaoInicial[1] != super.getPosicao()[1]) {
+				tabuleiro.invalidaRoquePequeno(super.getEhBranca());
+			}
+		}
 
 	}
 

@@ -393,62 +393,62 @@ public interface ProtegeRei {
 		return null;
 	}
 	
-	private List<Integer[]> direcaoAteRei(Boolean ehBranca, Peca peca){
-		List<Integer[]> retorno = new ArrayList<Integer[]>();
-		Tabuleiro tabuleiro = peca.getTabuleiro();
-		Direcao direcao = peca.getDirecaoProtegida();
-		Integer[] posPeca = peca.getPosicao();
-		Integer[] rei;
-		
-		if(ehBranca) {
-			rei = tabuleiro.getReiBranco();
-		} else {
-			rei = tabuleiro.getReiPreto();
-		}
-		
-		if(direcao == Direcao.FRENTE) {
-			for(int i = rei[1] + 1; i < 8; i++) {
-				if(tabuleiro.getPosicoes(ehBranca, rei[0], i)) {
-					break;
-				} 
-				retorno.add(new Integer[] {rei[0], i});
-			}
-			return retorno;
-		}
-		
-		if(direcao == Direcao.TRAS) {
-			for(int i = rei[1] - 1; i >= 0 ; i--) {
-				if(tabuleiro.getPosicoes(ehBranca, rei[0], i)) {
-					break;
-				} 
-				retorno.add(new Integer[] {rei[0], i});
-			}
-			return retorno;
-		}
-		
-		if(direcao == Direcao.ESQUERDA) {
-			for(int i = rei[0] - 1; i >= 0 ; i--) {
-				if(tabuleiro.getPosicoes(ehBranca, i, rei[1])) {
-					break;
-				} 
-				retorno.add(new Integer[] {i, rei[1]});
-			}
-			return retorno;
-		}
-		
-		if(direcao == Direcao.DIREITA) {
-			for(int i = rei[0] + 1; i < 8 ; i++) {
-				if(tabuleiro.getPosicoes(ehBranca, i, rei[1])) {
-					break;
-				} 
-				retorno.add(new Integer[] {i, rei[1]});
-			}
-			return retorno;
-		}
-		
-		
-		return null;
-			
-	}
+//	private List<Integer[]> direcaoAteRei(Boolean ehBranca, Peca peca){
+//		List<Integer[]> retorno = new ArrayList<Integer[]>();
+//		Tabuleiro tabuleiro = peca.getTabuleiro();
+//		Direcao direcao = peca.getDirecaoProtegida();
+//		Integer[] posPeca = peca.getPosicao();
+//		Integer[] rei;
+//		
+//		if(ehBranca) {
+//			rei = tabuleiro.getReiBranco();
+//		} else {
+//			rei = tabuleiro.getReiPreto();
+//		}
+//		
+//		if(direcao == Direcao.FRENTE) {
+//			for(int i = rei[1] + 1; i < 8; i++) {
+//				if(tabuleiro.getPosicoes(ehBranca, rei[0], i)) {
+//					break;
+//				} 
+//				retorno.add(new Integer[] {rei[0], i});
+//			}
+//			return retorno;
+//		}
+//		
+//		if(direcao == Direcao.TRAS) {
+//			for(int i = rei[1] - 1; i >= 0 ; i--) {
+//				if(tabuleiro.getPosicoes(ehBranca, rei[0], i)) {
+//					break;
+//				} 
+//				retorno.add(new Integer[] {rei[0], i});
+//			}
+//			return retorno;
+//		}
+//		
+//		if(direcao == Direcao.ESQUERDA) {
+//			for(int i = rei[0] - 1; i >= 0 ; i--) {
+//				if(tabuleiro.getPosicoes(ehBranca, i, rei[1])) {
+//					break;
+//				} 
+//				retorno.add(new Integer[] {i, rei[1]});
+//			}
+//			return retorno;
+//		}
+//		
+//		if(direcao == Direcao.DIREITA) {
+//			for(int i = rei[0] + 1; i < 8 ; i++) {
+//				if(tabuleiro.getPosicoes(ehBranca, i, rei[1])) {
+//					break;
+//				} 
+//				retorno.add(new Integer[] {i, rei[1]});
+//			}
+//			return retorno;
+//		}
+//		
+//		
+//		return null;
+//			
+//	}
 
 }

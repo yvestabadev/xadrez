@@ -10,7 +10,7 @@ import br.com.akconsultor.xadrez.pecas.Peao;
 import br.com.akconsultor.xadrez.pecas.Peca;
 import br.com.akconsultor.xadrez.pecas.Rei;
 import br.com.akconsultor.xadrez.pecas.Torre;
-
+@SuppressWarnings("unused")
 public class Jogador {
 	
 	private String nome;

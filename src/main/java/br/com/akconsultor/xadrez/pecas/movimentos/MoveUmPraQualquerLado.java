@@ -13,9 +13,10 @@ public interface MoveUmPraQualquerLado {
 		for (int i = posicao[0] - 1; i <= posicao[0] + 1; i++) {
 			for (int j = posicao[1] - 1; j <= posicao[1] + 1; j++) {
 				try {
-					
+					if (i != posicao[0] || j != posicao[1]) {
 						podeMover[i][j] = true;
-					
+					}
+
 				} catch (ArrayIndexOutOfBoundsException e) {
 
 				}
