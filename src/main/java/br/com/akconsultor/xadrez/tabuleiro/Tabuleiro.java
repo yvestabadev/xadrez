@@ -22,24 +22,28 @@ public class Tabuleiro {
 	private Boolean vezDasBrancas = true;
 	private Peca pecaCapturada;
 	private Boolean check = false;
+	private Boolean checkmate = false;
 	private Integer[] reiBranco = new Integer[2];
 	private Integer[] reiPreto = new Integer[2];
 	private Rei reiBrancoPeca;
 	private Rei reiPretoPeca;
 	private List<Direcao> direcoesCheck = new ArrayList<Direcao>();
 	private Peca pecaAmeaca;
-	
+
 	private Boolean roquePequenoPreto = true;
 	private Boolean roquePequenoBranco = true;
 	private Boolean roqueGrandePreto = true;
 	private Boolean roqueGrandeBranco = true;
-	
+
 	private Boolean atencaoRoquePequenoPreto = false;
 	private Boolean atencaoRoquePequenoBranco = false;
 	private Boolean atencaoRoqueGrandePreto = false;
 	private Boolean atencaoRoqueGrandeBranco = false;
+
 	
-	
+	public Boolean getCheckmate() {
+		return checkmate;
+	}
 	
 	public Boolean getAtencaoRoquePequenoPreto() {
 		return atencaoRoquePequenoPreto;
@@ -213,13 +217,13 @@ public class Tabuleiro {
 			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 			peca.setPosicao(coluna, linha);
 			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
-			
-			if(atencaoRoqueGrandeBranco && coluna == 2 && linha == 0) {
+
+			if (atencaoRoqueGrandeBranco && coluna == 2 && linha == 0) {
 				Peca torre = this.encontrarPeca(true, 0, 0);
 				this.posicoesBrancas[0][0] = false;
 				torre.setPosicao(3, 0);
 				this.posicoesBrancas[3][0] = true;
-			} else if(atencaoRoquePequenoBranco && coluna == 6 && linha == 0) {
+			} else if (atencaoRoquePequenoBranco && coluna == 6 && linha == 0) {
 				Peca torre = this.encontrarPeca(true, 0, 0);
 				this.posicoesBrancas[7][0] = false;
 				torre.setPosicao(5, 0);
@@ -255,17 +259,45 @@ public class Tabuleiro {
 
 			this.vezDasBrancas = false;
 
+			// verifica checkmate
+			if (this.check) {
+				Integer contador = this.pecasPretas.size();
+				for (Peca p : this.pecasPretas) {
+
+					p.verificaDestino();
+					Boolean breakAll = false;
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; i++) {
+							if (this.acionarMovimento[i][j]) {
+								breakAll = true;
+								break;
+							}
+						}
+						if (breakAll) {
+							break;
+						}
+					}
+					if (breakAll) {
+						break;
+					}
+					contador--;
+					if (contador == 0) {
+						this.checkmate = true;
+					}
+				}
+			}
+
 		} else if (!jogador.getJogaComBranco() && !this.vezDasBrancas && this.acionarMovimento[coluna][linha]) {
 			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
 			peca.setPosicao(coluna, linha);
 			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
-			
-			if(atencaoRoqueGrandePreto && coluna == 2 && linha == 7) {
+
+			if (atencaoRoqueGrandePreto && coluna == 2 && linha == 7) {
 				Peca torre = this.encontrarPeca(false, 0, 7);
 				this.posicoesPretas[0][7] = false;
 				torre.setPosicao(3, 7);
 				this.posicoesPretas[3][7] = true;
-			} else if(atencaoRoquePequenoPreto && coluna == 6 && linha == 7) {
+			} else if (atencaoRoquePequenoPreto && coluna == 6 && linha == 7) {
 				Peca torre = this.encontrarPeca(false, 7, 7);
 				this.posicoesPretas[7][7] = false;
 				torre.setPosicao(5, 7);
@@ -301,6 +333,34 @@ public class Tabuleiro {
 
 			this.vezDasBrancas = true;
 
+			// verifica checkmate
+			if (this.check) {
+				Integer contador = this.pecasBrancas.size();
+				for (Peca p : this.pecasBrancas) {
+
+					p.verificaDestino();
+					Boolean breakAll = false;
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; i++) {
+							if (this.acionarMovimento[i][j]) {
+								breakAll = true;
+								break;
+							}
+						}
+						if (breakAll) {
+							break;
+						}
+					}
+					if (breakAll) {
+						break;
+					}
+					contador--;
+					if (contador == 0) {
+						this.checkmate = true;
+					}
+				}
+
+			}
 		}
 
 		this.resetAcionarMovimento();
@@ -321,61 +381,61 @@ public class Tabuleiro {
 		} else {
 			pecas = this.pecasPretas;
 		}
-		
+
 		for (Peca p : pecas) {
 			if (p.getPosicao()[0] == coluna && p.getPosicao()[1] == linha) {
 				return p;
 			}
 		}
-		
+
 		return null;
 
 	}
 
 	public boolean getRoqueGrande(Boolean ehBranca) {
-		if(ehBranca) {
+		if (ehBranca) {
 			return this.roqueGrandeBranco;
 		} else {
 			return this.roqueGrandePreto;
 		}
 	}
-	
+
 	public boolean getRoquePequeno(Boolean ehBranca) {
-		if(ehBranca) {
+		if (ehBranca) {
 			return this.roquePequenoBranco;
 		} else {
 			return this.roquePequenoPreto;
 		}
 	}
-	
+
 	public void invalidaRoqueGrande(Boolean ehBranca) {
-		if(ehBranca) {
+		if (ehBranca) {
 			this.roqueGrandeBranco = false;
 		} else {
 			this.roqueGrandePreto = false;
 		}
 	}
-	
+
 	public void invalidaRoquePequeno(Boolean ehBranca) {
-		if(ehBranca) {
+		if (ehBranca) {
 			this.roquePequenoBranco = false;
 		} else {
 			this.roquePequenoPreto = false;
 		}
 	}
-	
+
 	public void promovePeao(Peca peca, Class<? extends Peca> p) {
 		Integer[] posicaoPeca = peca.getPosicao();
 		Peca novaPeca;
-		if(peca.getEhBranca()) {
+		if (peca.getEhBranca()) {
 			this.pecasBrancas.remove(peca);
-			if(p == Dama.class) {
+			if (p == Dama.class) {
 				novaPeca = new Dama(true, posicaoPeca[0], posicaoPeca[1], this);
 				this.getPecasBrancas().add(novaPeca);
-			} else if(p == Cavalo.class) {
+			} else if (p == Cavalo.class) {
 				novaPeca = new Cavalo(true, posicaoPeca[0], posicaoPeca[1], this);
 				this.getPecasBrancas().add(novaPeca);
-			} else if(p == Torre.class) {
+			} else if (p == Torre.class) {
 				novaPeca = new Torre(true, posicaoPeca[0], posicaoPeca[1], this);
 				this.getPecasBrancas().add(novaPeca);
 			} else {
@@ -384,13 +444,13 @@ public class Tabuleiro {
 			}
 		} else {
 			this.pecasPretas.remove(peca);
-			if(p == Dama.class) {
+			if (p == Dama.class) {
 				novaPeca = new Dama(false, posicaoPeca[0], posicaoPeca[1], this);
 				this.getPecasPretas().add(novaPeca);
-			} else if(p == Cavalo.class) {
+			} else if (p == Cavalo.class) {
 				novaPeca = new Cavalo(false, posicaoPeca[0], posicaoPeca[1], this);
 				this.getPecasPretas().add(novaPeca);
-			} else if(p == Torre.class) {
+			} else if (p == Torre.class) {
 				novaPeca = new Torre(false, posicaoPeca[0], posicaoPeca[1], this);
 				this.getPecasPretas().add(novaPeca);
 			} else {
@@ -398,8 +458,7 @@ public class Tabuleiro {
 				this.getPecasPretas().add(novaPeca);
 			}
 		}
-		
-		
+
 	}
 
 }

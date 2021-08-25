@@ -2,6 +2,7 @@ package br.com.akconsultor.xadrez.tabuleiro;
 
 public class Jogo {
 	
+	private static Long id = 0l;
 	private Jogador jogador1;
 	private Jogador jogador2;
 	private Tabuleiro tabuleiro;
@@ -10,6 +11,11 @@ public class Jogo {
 		this.tabuleiro = new Tabuleiro();
 		this.jogador1 = new Jogador(jogador1, true, tabuleiro);
 		this.jogador2 = new Jogador(jogador2, false, tabuleiro);
+		Jogo.id++;
+	}
+	
+	public static Long getId() {
+		return id;
 	}
 	
 	public Tabuleiro getTabuleiro() {

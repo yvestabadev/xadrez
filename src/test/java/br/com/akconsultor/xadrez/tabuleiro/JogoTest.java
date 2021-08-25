@@ -408,7 +408,7 @@ class JogoTest {
 		tabuleiro.verifica(j1, pecaBranca);
 		assertTrue(tabuleiro.getAcionarMovimento()[4][1]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[5][0]);
-		assertTrue(!tabuleiro.getAcionarMovimento()[6][0]);
+		assertTrue(tabuleiro.getAcionarMovimento()[6][0]);
 		
 	}
 }
