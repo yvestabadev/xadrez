@@ -3,6 +3,19 @@ package br.com.akconsultor.xadrez.tabuleiro;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
 import br.com.akconsultor.xadrez.pecas.Bispo;
 import br.com.akconsultor.xadrez.pecas.Cavalo;
 import br.com.akconsultor.xadrez.pecas.Dama;
@@ -11,23 +24,37 @@ import br.com.akconsultor.xadrez.pecas.Rei;
 import br.com.akconsultor.xadrez.pecas.Torre;
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 
+@Entity
 public class Tabuleiro {
 
-	private boolean[][] posicoesBrancas = new boolean[8][8];
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private boolean[][] posicoesBrancas = new boolean[8][8];	
 	private boolean[][] posicoesPretas = new boolean[8][8];
 	private boolean[][] acionarMovimento = new boolean[8][8];
 	private boolean[][] lugaresAmeacados = new boolean[8][8];
+	@OneToMany
 	private List<Peca> pecasBrancas = new ArrayList<Peca>();
+	@OneToMany
 	private List<Peca> pecasPretas = new ArrayList<Peca>();
 	private Boolean vezDasBrancas = true;
+	@Transient
 	private Peca pecaCapturada;
 	private Boolean check = false;
 	private Boolean checkmate = false;
 	private Integer[] reiBranco = new Integer[2];
 	private Integer[] reiPreto = new Integer[2];
+	@OneToOne
 	private Rei reiBrancoPeca;
+	@OneToOne
 	private Rei reiPretoPeca;
+	@ElementCollection(targetClass = Direcao.class)
+	@JoinTable(name = "direcoes_check", joinColumns = @JoinColumn(name = "TabuleiroId"))
+	@Enumerated(EnumType.STRING)
 	private List<Direcao> direcoesCheck = new ArrayList<Direcao>();
+	@OneToOne
 	private Peca pecaAmeaca;
 
 	private Boolean roquePequenoPreto = true;
@@ -40,11 +67,10 @@ public class Tabuleiro {
 	private Boolean atencaoRoqueGrandePreto = false;
 	private Boolean atencaoRoqueGrandeBranco = false;
 
-	
 	public Boolean getCheckmate() {
 		return checkmate;
 	}
-	
+
 	public Boolean getAtencaoRoquePequenoPreto() {
 		return atencaoRoquePequenoPreto;
 	}
@@ -139,17 +165,12 @@ public class Tabuleiro {
 		}
 	}
 
-//	public boolean getPosicoesBrancas(Integer coluna, Integer linha) {
-//		return posicoesBrancas[coluna][linha];
-//	}
+
 
 	public void setPosicoesBrancas(Peca peca, Integer coluna, Integer linha) {
 		this.posicoesBrancas[coluna][linha] = true;
 	}
 
-//	public boolean getPosicoesPretas(Integer coluna, Integer linha) {
-//		return posicoesPretas[coluna][linha];
-//	}
 
 	public void setPosicoesPretas(Peca peca, Integer coluna, Integer linha) {
 		this.posicoesPretas[coluna][linha] = true;
@@ -260,6 +281,7 @@ public class Tabuleiro {
 			this.vezDasBrancas = false;
 
 			// verifica checkmate
+			this.resetAcionarMovimento();
 			if (this.check) {
 				Integer contador = this.pecasPretas.size();
 				for (Peca p : this.pecasPretas) {
@@ -267,7 +289,7 @@ public class Tabuleiro {
 					p.verificaDestino();
 					Boolean breakAll = false;
 					for (int i = 0; i < 8; i++) {
-						for (int j = 0; j < 8; i++) {
+						for (int j = 0; j < 8; j++) {
 							if (this.acionarMovimento[i][j]) {
 								breakAll = true;
 								break;
@@ -334,14 +356,14 @@ public class Tabuleiro {
 			this.vezDasBrancas = true;
 
 			// verifica checkmate
+			this.resetAcionarMovimento();
 			if (this.check) {
 				Integer contador = this.pecasBrancas.size();
 				for (Peca p : this.pecasBrancas) {
-
 					p.verificaDestino();
 					Boolean breakAll = false;
 					for (int i = 0; i < 8; i++) {
-						for (int j = 0; j < 8; i++) {
+						for (int j = 0; j < 8; j++) {
 							if (this.acionarMovimento[i][j]) {
 								breakAll = true;
 								break;

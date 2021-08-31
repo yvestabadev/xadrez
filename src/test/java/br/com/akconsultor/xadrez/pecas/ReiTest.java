@@ -48,6 +48,7 @@ class ReiTest {
 		assertTrue(!tabuleiro.getAcionarMovimento()[7][5]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[7][6]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[7][7]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[4][6]);
 		
 		
 

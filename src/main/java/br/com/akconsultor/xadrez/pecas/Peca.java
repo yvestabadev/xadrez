@@ -3,14 +3,36 @@ package br.com.akconsultor.xadrez.pecas;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
+
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
-
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Peca {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	private Integer[] posicao = new Integer[2];
 	private Boolean ehBranca;
+	@ElementCollection(targetClass = Direcao.class)
+	@JoinTable(name = "direcoes_peca", joinColumns = @JoinColumn (name = "peca_id"))
+	@Enumerated(EnumType.STRING)
 	protected List<Direcao> direcoes = new ArrayList<Direcao>();
+	@OneToOne
 	protected Tabuleiro tabuleiro;
 	private Direcao direcaoProtegida;
 	

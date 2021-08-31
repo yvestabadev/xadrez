@@ -2,10 +2,12 @@ package br.com.akconsultor.xadrez.pecas;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveUmPraQualquerLado;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
-
+@Entity
 public class Rei extends Peca implements MoveUmPraQualquerLado {
 
 	Integer[] posicaoInicial;

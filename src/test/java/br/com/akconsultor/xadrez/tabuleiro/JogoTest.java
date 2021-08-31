@@ -408,7 +408,37 @@ class JogoTest {
 		tabuleiro.verifica(j1, pecaBranca);
 		assertTrue(tabuleiro.getAcionarMovimento()[4][1]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[5][0]);
-		assertTrue(tabuleiro.getAcionarMovimento()[6][0]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[6][0]);
+		
+	}
+	
+	@Test
+	void checkmate() {
+		
+		Peca peaoBispo = tabuleiro.encontrarPeca(true, 5, 1);		
+		tabuleiro.verifica(j1, peaoBispo);
+		tabuleiro.move(j1, peaoBispo, 5, 2);
+		
+		Peca peaoPreto = tabuleiro.encontrarPeca(false, 4, 6);		
+		tabuleiro.verifica(j2, peaoPreto);
+		tabuleiro.move(j2, peaoPreto, 4, 4);
+		
+		Peca peaoCavalo = tabuleiro.encontrarPeca(true, 6, 1);	
+		tabuleiro.verifica(j1, peaoCavalo);
+		tabuleiro.move(j1, peaoCavalo, 6, 3);
+		
+		Peca damaPreta = tabuleiro.encontrarPeca(false, 3, 7);
+		tabuleiro.verifica(j2, damaPreta);
+		tabuleiro.move(j2, damaPreta, 7, 3);
+		
+		assertTrue(tabuleiro.getPosicoes(true, 6, 3));
+		assertTrue(tabuleiro.getPosicoes(true, 5, 2));
+		assertTrue(tabuleiro.getPosicoes(false, 4, 4));
+		assertTrue(tabuleiro.getPosicoes(false, 7, 3));
+		
+		assertTrue(tabuleiro.getCheck());
+		assertTrue(tabuleiro.getCheckmate());
+		
 		
 	}
 }

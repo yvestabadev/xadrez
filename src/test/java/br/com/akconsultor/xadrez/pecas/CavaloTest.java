@@ -22,6 +22,7 @@ class CavaloTest {
 		assertTrue(tabuleiro.getAcionarMovimento()[1][4]);
 		assertTrue(tabuleiro.getAcionarMovimento()[5][2]);
 		assertTrue(tabuleiro.getAcionarMovimento()[4][1]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[4][6]);
 	}
 	
 	@Test

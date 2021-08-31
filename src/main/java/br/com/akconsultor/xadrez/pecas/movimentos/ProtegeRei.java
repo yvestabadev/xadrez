@@ -59,7 +59,7 @@ public interface ProtegeRei {
 				for (int i = rei[0] - 1; i >= 0; i--) {
 					int j = rei[1] + (i - rei[0]);
 					podeMover[i][j] = true;
-					if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, j)) {
+					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
 						break;
 					}
 
@@ -68,7 +68,7 @@ public interface ProtegeRei {
 				for (int i = rei[0] + 1; i < 8; i++) {
 					int j = rei[1] - (i - rei[0]);
 					podeMover[i][j] = true;
-					if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, j)) {
+					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
 						break;
 					}
 
@@ -78,7 +78,7 @@ public interface ProtegeRei {
 				for (int i = rei[0] - 1; i >= 0; i--) {
 					int j = rei[1] - (i - rei[0]);
 					podeMover[i][j] = true;
-					if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, j)) {
+					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
 						break;
 					}
 
@@ -88,7 +88,7 @@ public interface ProtegeRei {
 				for (int i = rei[0] + 1; i < 8; i++) {
 					int j = rei[1] + (i - rei[0]);
 					podeMover[i][j] = true;
-					if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, j)) {
+					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
 						break;
 					}
 
@@ -98,7 +98,7 @@ public interface ProtegeRei {
 				for (int i = rei[1] + 1; i < 8; i++) {
 					int coluna = rei[0];
 					podeMover[coluna][i] = true;
-					if (tabuleiro.getPosicoes(!peca.getEhBranca(), coluna, i)) {
+					if (i == pecaAmeaca[1]) {
 						break;
 					}
 				}
@@ -107,7 +107,7 @@ public interface ProtegeRei {
 				for (int i = rei[1] - 1; i >= 0; i--) {
 					int coluna = rei[0];
 					podeMover[coluna][i] = true;
-					if (tabuleiro.getPosicoes(!peca.getEhBranca(), coluna, i)) {
+					if (i == pecaAmeaca[1]) {
 						break;
 					}
 				}
@@ -116,7 +116,7 @@ public interface ProtegeRei {
 				for (int i = rei[0] + 1; i < 8; i++) {
 					int linha = rei[1];
 					podeMover[i][linha] = true;
-					if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, linha)) {
+					if (i == pecaAmeaca[0]) {
 						break;
 					}
 				}
@@ -125,7 +125,7 @@ public interface ProtegeRei {
 				for (int i = rei[0] - 1; i >= 0; i--) {
 					int linha = rei[1];
 					podeMover[i][linha] = true;
-					if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, linha)) {
+					if (i == pecaAmeaca[0]) {
 						break;
 					}
 				}

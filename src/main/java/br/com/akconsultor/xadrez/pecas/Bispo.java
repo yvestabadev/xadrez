@@ -1,10 +1,12 @@
 package br.com.akconsultor.xadrez.pecas;
 
+import javax.persistence.Entity;
+
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveDiagonal;
 import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
-
+@Entity
 public class Bispo extends Peca implements MoveDiagonal, ProtegeRei {
 
 	public Bispo(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {

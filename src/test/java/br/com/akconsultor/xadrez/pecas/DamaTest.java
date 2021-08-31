@@ -29,6 +29,7 @@ class DamaTest {
 		assertTrue(tabuleiro.getAcionarMovimento()[6][3]);
 		assertTrue(tabuleiro.getAcionarMovimento()[2][2]);
 		assertTrue(tabuleiro.getAcionarMovimento()[1][1]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[4][6]);
 	}
 	
 	@Test

@@ -3,6 +3,13 @@ package br.com.akconsultor.xadrez.tabuleiro;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import br.com.akconsultor.xadrez.pecas.Bispo;
 import br.com.akconsultor.xadrez.pecas.Cavalo;
 import br.com.akconsultor.xadrez.pecas.Dama;
@@ -11,11 +18,18 @@ import br.com.akconsultor.xadrez.pecas.Peca;
 import br.com.akconsultor.xadrez.pecas.Rei;
 import br.com.akconsultor.xadrez.pecas.Torre;
 @SuppressWarnings("unused")
+@Entity
 public class Jogador {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	private String nome;
 	private Boolean jogaComBranco;
+	@OneToOne
 	private Tabuleiro tabuleiro;
+	@OneToMany
 	private List<Peca> pecas = new ArrayList<Peca>();
 	
 	

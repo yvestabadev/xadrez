@@ -1,10 +1,12 @@
 package br.com.akconsultor.xadrez.pecas;
 
+import javax.persistence.Entity;
+
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveEle;
 import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
-
+@Entity
 public class Cavalo extends Peca implements MoveEle, ProtegeRei {
 
 	public Cavalo(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {

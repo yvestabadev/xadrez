@@ -19,6 +19,7 @@ class PeaoTest {
 		assertTrue(tabuleiro.getAcionarMovimento()[3][3]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[3][4]);
 		assertTrue(!tabuleiro.getAcionarMovimento()[4][1]);
+		assertTrue(!tabuleiro.getAcionarMovimento()[4][6]);
 
 	}
 	
