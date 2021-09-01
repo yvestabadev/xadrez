@@ -22,21 +22,21 @@ public interface ProtegeRei {
 
 		return retorno;
 	}
-	
-	public default boolean[][] naoSaiDoRei(boolean[][] destino, Peca peca, Tabuleiro tabuleiro){
+
+	public default boolean[][] naoSaiDoRei(boolean[][] destino, Peca peca, Tabuleiro tabuleiro) {
 		boolean[][] ficaNaFrente = naFrenteDoRei(peca, tabuleiro);
 		boolean[][] retorno = new boolean[8][8];
-		if(ficaNaFrente != null) {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				if (destino[i][j] && ficaNaFrente[i][j]) {
-					retorno[i][j] = true;
+		if (ficaNaFrente != null) {
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (destino[i][j] && ficaNaFrente[i][j]) {
+						retorno[i][j] = true;
+					}
 				}
 			}
+			return retorno;
 		}
-		return retorno;
-		}
-		
+
 		return null;
 	}
 
@@ -58,7 +58,9 @@ public interface ProtegeRei {
 			if (direcao == Direcao.NE) {
 				for (int i = rei[0] - 1; i >= 0; i--) {
 					int j = rei[1] + (i - rei[0]);
-					podeMover[i][j] = true;
+			
+						podeMover[i][j] = true;
+		
 					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
 						break;
 					}
@@ -67,7 +69,9 @@ public interface ProtegeRei {
 			} else if (direcao == Direcao.NW) {
 				for (int i = rei[0] + 1; i < 8; i++) {
 					int j = rei[1] - (i - rei[0]);
-					podeMover[i][j] = true;
+
+						podeMover[i][j] = true;
+				
 					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
 						break;
 					}
@@ -77,7 +81,8 @@ public interface ProtegeRei {
 			} else if (direcao == Direcao.SE) {
 				for (int i = rei[0] - 1; i >= 0; i--) {
 					int j = rei[1] - (i - rei[0]);
-					podeMover[i][j] = true;
+						podeMover[i][j] = true;
+				
 					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
 						break;
 					}
@@ -85,9 +90,13 @@ public interface ProtegeRei {
 				}
 
 			} else if (direcao == Direcao.SW) {
+				//quando o metodo e acionado pelo controller precisa de try, catch, o que e errado
+				//provavelmente o atributo pecaAmeaca fica diferente pelo controller
 				for (int i = rei[0] + 1; i < 8; i++) {
 					int j = rei[1] + (i - rei[0]);
-					podeMover[i][j] = true;
+	
+						podeMover[i][j] = true;
+
 					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
 						break;
 					}
@@ -142,24 +151,31 @@ public interface ProtegeRei {
 		Direcao direcaoProtegida = peca.getDirecaoProtegida();
 		Integer coluna;
 		Integer linha;
+		/*
+		 * posicoes que a peca que fica na frente do rei pode andar se a regra dela
+		 * permitir
+		 */
 		List<Integer[]> posicoes = new ArrayList<Integer[]>();
 		Peca pecaAdversaria;
+		/* esse contador verifica se realmente precisa proteger a direcao */
 		int cont = 0;
-		
-		if(peca.getEhBranca()) {
+
+		if (peca.getEhBranca()) {
 			coluna = tabuleiro.getReiBranco()[0];
 			linha = tabuleiro.getReiBranco()[1];
 		} else {
 			coluna = tabuleiro.getReiPreto()[0];
 			linha = tabuleiro.getReiPreto()[1];
 		}
-		
-		
 
 		if (direcaoProtegida != null) {
+			/*
+			 * ve a posicao da peca em relacao ao rei da sua cor e nao deixa sair da frente
+			 * para que o rei nao fique em cheque
+			 */
 			if (direcaoProtegida == Direcao.FRENTE) {
 				for (int i = linha + 1; i < 8; i++) {
-					if(cont == 2) {
+					if (cont == 2) {
 						return null;
 					}
 					posicoes.add(new Integer[] { coluna, i });
@@ -181,9 +197,10 @@ public interface ProtegeRei {
 				}
 				return null;
 			}
+
 			if (direcaoProtegida == Direcao.TRAS) {
 				for (int i = linha - 1; i >= 0; i--) {
-					if(cont == 2) {
+					if (cont == 2) {
 						return null;
 					}
 					posicoes.add(new Integer[] { coluna, i });
@@ -205,13 +222,13 @@ public interface ProtegeRei {
 				}
 				return null;
 			}
-			
+
 			if (direcaoProtegida == Direcao.DIREITA) {
 				for (int i = coluna + 1; i < 8; i++) {
-					if(cont == 2) {
+					if (cont == 2) {
 						return null;
 					}
-					posicoes.add(new Integer[] {i, linha});
+					posicoes.add(new Integer[] { i, linha });
 					if (tabuleiro.getPosicoes(peca.getEhBranca(), i, linha)) {
 						cont++;
 					} else if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, linha)) {
@@ -230,13 +247,13 @@ public interface ProtegeRei {
 				}
 				return null;
 			}
-			
+
 			if (direcaoProtegida == Direcao.ESQUERDA) {
 				for (int i = coluna - 1; i >= 0; i--) {
-					if(cont == 2) {
+					if (cont == 2) {
 						return null;
 					}
-					posicoes.add(new Integer[] {i, linha});
+					posicoes.add(new Integer[] { i, linha });
 					if (tabuleiro.getPosicoes(peca.getEhBranca(), i, linha)) {
 						cont++;
 					} else if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, linha)) {
@@ -255,15 +272,15 @@ public interface ProtegeRei {
 				}
 				return null;
 			}
-			
+
 			if (direcaoProtegida == Direcao.NE) {
 				try {
 					for (int i = coluna + 1; i < 8; i++) {
 						int j = linha + (i - coluna);
-						if(cont == 2) {
+						if (cont == 2) {
 							return null;
 						}
-						posicoes.add(new Integer[] {i, j});
+						posicoes.add(new Integer[] { i, j });
 						if (tabuleiro.getPosicoes(peca.getEhBranca(), i, j)) {
 							cont++;
 						} else if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, j)) {
@@ -285,15 +302,15 @@ public interface ProtegeRei {
 				}
 				return null;
 			}
-			
+
 			if (direcaoProtegida == Direcao.SW) {
 				try {
 					for (int i = coluna - 1; i >= 0; i--) {
 						int j = linha + (i - coluna);
-						if(cont == 2) {
+						if (cont == 2) {
 							return null;
 						}
-						posicoes.add(new Integer[] {i, j});
+						posicoes.add(new Integer[] { i, j });
 						if (tabuleiro.getPosicoes(peca.getEhBranca(), i, j)) {
 							cont++;
 						} else if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, j)) {
@@ -315,15 +332,15 @@ public interface ProtegeRei {
 				}
 				return null;
 			}
-			
+
 			if (direcaoProtegida == Direcao.NW) {
 				try {
 					for (int i = coluna - 1; i >= 0; i--) {
 						int j = linha - (i - coluna);
-						if(cont == 2) {
+						if (cont == 2) {
 							return null;
 						}
-						posicoes.add(new Integer[] {i, j});
+						posicoes.add(new Integer[] { i, j });
 						if (tabuleiro.getPosicoes(peca.getEhBranca(), i, j)) {
 							cont++;
 						} else if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, j)) {
@@ -345,15 +362,15 @@ public interface ProtegeRei {
 				}
 				return null;
 			}
-			
+
 			if (direcaoProtegida == Direcao.SE) {
 				try {
 					for (int i = coluna + 1; i < 8; i++) {
 						int j = linha - (i - coluna);
-						if(cont == 2) {
+						if (cont == 2) {
 							return null;
 						}
-						posicoes.add(new Integer[] {i, j});
+						posicoes.add(new Integer[] { i, j });
 						if (tabuleiro.getPosicoes(peca.getEhBranca(), i, j)) {
 							cont++;
 						} else if (tabuleiro.getPosicoes(!peca.getEhBranca(), i, j)) {
@@ -392,63 +409,5 @@ public interface ProtegeRei {
 
 		return null;
 	}
-	
-//	private List<Integer[]> direcaoAteRei(Boolean ehBranca, Peca peca){
-//		List<Integer[]> retorno = new ArrayList<Integer[]>();
-//		Tabuleiro tabuleiro = peca.getTabuleiro();
-//		Direcao direcao = peca.getDirecaoProtegida();
-//		Integer[] posPeca = peca.getPosicao();
-//		Integer[] rei;
-//		
-//		if(ehBranca) {
-//			rei = tabuleiro.getReiBranco();
-//		} else {
-//			rei = tabuleiro.getReiPreto();
-//		}
-//		
-//		if(direcao == Direcao.FRENTE) {
-//			for(int i = rei[1] + 1; i < 8; i++) {
-//				if(tabuleiro.getPosicoes(ehBranca, rei[0], i)) {
-//					break;
-//				} 
-//				retorno.add(new Integer[] {rei[0], i});
-//			}
-//			return retorno;
-//		}
-//		
-//		if(direcao == Direcao.TRAS) {
-//			for(int i = rei[1] - 1; i >= 0 ; i--) {
-//				if(tabuleiro.getPosicoes(ehBranca, rei[0], i)) {
-//					break;
-//				} 
-//				retorno.add(new Integer[] {rei[0], i});
-//			}
-//			return retorno;
-//		}
-//		
-//		if(direcao == Direcao.ESQUERDA) {
-//			for(int i = rei[0] - 1; i >= 0 ; i--) {
-//				if(tabuleiro.getPosicoes(ehBranca, i, rei[1])) {
-//					break;
-//				} 
-//				retorno.add(new Integer[] {i, rei[1]});
-//			}
-//			return retorno;
-//		}
-//		
-//		if(direcao == Direcao.DIREITA) {
-//			for(int i = rei[0] + 1; i < 8 ; i++) {
-//				if(tabuleiro.getPosicoes(ehBranca, i, rei[1])) {
-//					break;
-//				} 
-//				retorno.add(new Integer[] {i, rei[1]});
-//			}
-//			return retorno;
-//		}
-//		
-//		
-//		return null;
-//			
-//	}
 
 }

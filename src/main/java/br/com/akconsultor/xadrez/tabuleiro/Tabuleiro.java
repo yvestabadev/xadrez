@@ -29,7 +29,7 @@ import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 @Entity
 public class Tabuleiro {
 	
-	//preciso trocar as matrizes por algo mais simplificado para BD
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +63,7 @@ public class Tabuleiro {
 	@OrderColumn
 	private Integer[] reiBranco = new Integer[2];
 	@ElementCollection
-	@JoinTable(name = "posicao__rei_preto")
+	@JoinTable(name = "posicao_rei_preto")
 	@OrderColumn
 	private Integer[] reiPreto = new Integer[2];
 	@OneToOne
@@ -75,7 +75,7 @@ public class Tabuleiro {
 	@JoinTable(name = "direcoes_check", joinColumns = @JoinColumn(name = "tabuleiro_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Direcao> direcoesCheck = new ArrayList<Direcao>();
-	@Transient
+	@OneToOne
 	private Peca pecaAmeaca;
 
 	private Boolean roquePequenoPreto = true;

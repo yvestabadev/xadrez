@@ -51,11 +51,13 @@ public class JogoService {
 		Integer coluna = mov.getColunaDestino();
 		Integer linha = mov.getLinhaDestino();
 		
-		tabuleiro.validaMovimento(coluna, linha);
+		
 		
 		if(mov.getEhBranca()) {
+			tabuleiro.verifica(jogadorBranco, peca);
 			tabuleiro.move(jogadorBranco, peca, coluna, linha);			
 		} else {
+			tabuleiro.verifica(jogadorPreto, peca);
 			tabuleiro.move(jogadorPreto, peca, coluna, linha);
 		}
 		

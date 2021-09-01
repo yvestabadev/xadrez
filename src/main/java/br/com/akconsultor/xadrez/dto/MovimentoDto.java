@@ -28,6 +28,32 @@ public class MovimentoDto {
 	public Integer getLinhaDestino() {
 		return linhaDestino;
 	}
+
+	public void setJogoId(Long jogoId) {
+		this.jogoId = jogoId;
+	}
+
+	public void setEhBranca(Boolean ehBranca) {
+		this.ehBranca = ehBranca;
+	}
+
+	public void setColunaAtual(Integer colunaAtual) {
+		this.colunaAtual = colunaAtual;
+	}
+
+	public void setLinhaAtual(Integer linhaAtual) {
+		this.linhaAtual = linhaAtual;
+	}
+
+	public void setColunaDestino(Integer colunaDestino) {
+		this.colunaDestino = colunaDestino;
+	}
+
+	public void setLinhaDestino(Integer linhaDestino) {
+		this.linhaDestino = linhaDestino;
+	}
+	
+	
 	
 	
 
