@@ -1,11 +1,13 @@
 package br.com.akconsultor.xadrez.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.akconsultor.xadrez.dto.ChequeEMate;
 import br.com.akconsultor.xadrez.dto.MovimentoDto;
 import br.com.akconsultor.xadrez.dto.MovimentoVerificaDto;
-import br.com.akconsultor.xadrez.dto.TabuleiroDto;
 import br.com.akconsultor.xadrez.pecas.Peca;
+import br.com.akconsultor.xadrez.repository.JogoRepository;
 import br.com.akconsultor.xadrez.tabuleiro.Jogador;
 import br.com.akconsultor.xadrez.tabuleiro.Jogo;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
@@ -13,13 +15,15 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 @Service
 public class JogoService {
 
+	@Autowired
+	private JogoRepository repository;
 	
-//	@Cacheable(value = "jogo")
-//	public Jogo novoJogo() {
-//		Jogo jogo = new Jogo("jogador1", "jogador2");
-//		
-//		return jogo;
-//	}
+	
+	public Long novoJogo() {
+		Jogo jogo = new Jogo("jogador1", "jogador2");
+		repository.save(jogo);
+		return jogo.getId();
+	}
 	
 	public boolean[][] verificaDestino(MovimentoVerificaDto mov, Jogo jogo) {
 	
@@ -37,8 +41,8 @@ public class JogoService {
 		return tabuleiro.getAcionarMovimento();
 	}
 
-	public TabuleiroDto move(MovimentoDto mov, Jogo jogo) {
-		
+	public ChequeEMate move(MovimentoDto mov, Jogo jogo) {
+		ChequeEMate bool = new ChequeEMate();
 		Tabuleiro tabuleiro = jogo.getTabuleiro();
 		Jogador jogadorBranco = jogo.getJogador1();
 		Jogador jogadorPreto = jogo.getJogador2();
@@ -47,13 +51,20 @@ public class JogoService {
 		Integer coluna = mov.getColunaDestino();
 		Integer linha = mov.getLinhaDestino();
 		
+		tabuleiro.validaMovimento(coluna, linha);
+		
 		if(mov.getEhBranca()) {
 			tabuleiro.move(jogadorBranco, peca, coluna, linha);			
 		} else {
 			tabuleiro.move(jogadorPreto, peca, coluna, linha);
 		}
 		
-		return new TabuleiroDto(tabuleiro, tabuleiro.getPosicoes(mov.getEhBranca(), coluna, linha));
+		bool.setCheck(tabuleiro.getCheck());
+		bool.setCheckmate(tabuleiro.getCheckmate());
+		
+	
+		
+		return bool;
 		
 	}
 

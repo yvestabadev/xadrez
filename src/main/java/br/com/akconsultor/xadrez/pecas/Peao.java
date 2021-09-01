@@ -5,8 +5,12 @@ import javax.persistence.Entity;
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
+
 @Entity
 public class Peao extends Peca implements ProtegeRei {
+
+	public Peao() {
+	}
 
 	public Peao(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
@@ -43,39 +47,37 @@ public class Peao extends Peca implements ProtegeRei {
 		Integer[] posicao = this.getPosicao();
 		Integer qtdeCasas;
 		Integer posInicial;
-		
-		if(this.getEhBranca()) {
+
+		if (this.getEhBranca()) {
 			qtdeCasas = 1;
 			posInicial = 1;
-		}else {
+		} else {
 			qtdeCasas = -1;
 			posInicial = 6;
 		}
 
-	
-			if (!tabuleiro.getPosicoes(this.getEhBranca(), posicao[0], posicao[1] + qtdeCasas)
-					&& !tabuleiro.getPosicoes(!this.getEhBranca(), posicao[0], posicao[1] + qtdeCasas)) {
-				podeMover[posicao[0]][posicao[1] + qtdeCasas] = true;
-				if (!tabuleiro.getPosicoes(this.getEhBranca(), posicao[0], posicao[1] + (qtdeCasas*2))
-						&& !tabuleiro.getPosicoes(!this.getEhBranca(), posicao[0], posicao[1] + (qtdeCasas*2)) && posicao[1] == posInicial) {
-					podeMover[posicao[0]][posicao[1] + (qtdeCasas*2)] = true;
-				}
+		if (!tabuleiro.getPosicoes(this.getEhBranca(), posicao[0], posicao[1] + qtdeCasas)
+				&& !tabuleiro.getPosicoes(!this.getEhBranca(), posicao[0], posicao[1] + qtdeCasas)) {
+			podeMover[posicao[0]][posicao[1] + qtdeCasas] = true;
+			if (!tabuleiro.getPosicoes(this.getEhBranca(), posicao[0], posicao[1] + (qtdeCasas * 2))
+					&& !tabuleiro.getPosicoes(!this.getEhBranca(), posicao[0], posicao[1] + (qtdeCasas * 2))
+					&& posicao[1] == posInicial) {
+				podeMover[posicao[0]][posicao[1] + (qtdeCasas * 2)] = true;
 			}
-			try {
-				if (tabuleiro.getPosicoes(!this.getEhBranca(), posicao[0] + 1, posicao[1] + qtdeCasas)) {
-					podeMover[posicao[0] + 1][posicao[1] + qtdeCasas] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (tabuleiro.getPosicoes(!this.getEhBranca(), posicao[0] + 1, posicao[1] + qtdeCasas)) {
+				podeMover[posicao[0] + 1][posicao[1] + qtdeCasas] = true;
 			}
-			try {
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
 
-				if (tabuleiro.getPosicoes(!this.getEhBranca(), posicao[0] - 1, posicao[1] + qtdeCasas)) {
-					podeMover[posicao[0] - 1][posicao[1] + qtdeCasas] = true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
+			if (tabuleiro.getPosicoes(!this.getEhBranca(), posicao[0] - 1, posicao[1] + qtdeCasas)) {
+				podeMover[posicao[0] - 1][posicao[1] + qtdeCasas] = true;
 			}
-
-		
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
 
 		return podeMover;
 	}
@@ -117,7 +119,7 @@ public class Peao extends Peca implements ProtegeRei {
 			tabuleiro.complementarAmeaca(ameaca);
 
 		}
-		
+
 		verificaCheck();
 	}
 

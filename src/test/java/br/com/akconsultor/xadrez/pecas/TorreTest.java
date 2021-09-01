@@ -8,7 +8,7 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 @SuppressWarnings("unused")
 class TorreTest {
 
-	Tabuleiro tabuleiro = new Tabuleiro();
+	Tabuleiro tabuleiro = new Tabuleiro(1);
 	Torre torre = new Torre(true, 4, 4, tabuleiro);
 
 

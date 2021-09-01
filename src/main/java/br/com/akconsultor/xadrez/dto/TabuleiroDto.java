@@ -5,14 +5,14 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 @SuppressWarnings("unused")
 public class TabuleiroDto {
 	
-	private Boolean pecaMoveu;
-	private Boolean check;
+
+	private Boolean cheque;
 	private Boolean checkmate;
 	
-	public TabuleiroDto(Tabuleiro tabuleiro, Boolean pecaMoveu) {
-		this.pecaMoveu = pecaMoveu;
-		this.check = tabuleiro.getCheck();
-		this.checkmate = tabuleiro.getCheckmate();
+	public TabuleiroDto(Boolean cheque, Boolean checkmate) {
+
+		this.cheque = cheque;
+		this.checkmate = checkmate;
 	}
 
 }

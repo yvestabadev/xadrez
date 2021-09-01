@@ -9,7 +9,7 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 class BispoTest {
 	
 	
-	Tabuleiro tabuleiro = new Tabuleiro();
+	Tabuleiro tabuleiro = new Tabuleiro(1);
 	Bispo bispo = new Bispo(true, 3, 3, tabuleiro);;
 
 	@Test

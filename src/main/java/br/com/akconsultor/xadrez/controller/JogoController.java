@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.akconsultor.xadrez.dto.ChequeEMate;
 import br.com.akconsultor.xadrez.dto.MovimentoDto;
 import br.com.akconsultor.xadrez.dto.MovimentoVerificaDto;
-import br.com.akconsultor.xadrez.dto.TabuleiroDto;
+import br.com.akconsultor.xadrez.repository.JogoRepository;
 import br.com.akconsultor.xadrez.service.JogoService;
 import br.com.akconsultor.xadrez.tabuleiro.Jogo;
 
@@ -21,32 +22,30 @@ public class JogoController {
 	@Autowired
 	private JogoService service;
 	
-
-	public Jogo jogar() {
-		Jogo jogo = new Jogo("jogador1", "jogador2");
-		System.out.println(jogo);
-		return jogo;
-	}
+	@Autowired
+	private JogoRepository repository;
+	
 	
 	
 	@GetMapping("/novoJogo")
-	public ResponseEntity<Long> novoJogo(){
-		Jogo jogo = this.jogar();
-		return ResponseEntity.ok(jogo.getId());
+	public ResponseEntity<Long> novoJogo(){		
+		return ResponseEntity.ok(service.novoJogo());
 	}
 	
 	@PostMapping("/verifica")
 	public ResponseEntity<boolean[][]> verificaDestino(@RequestBody MovimentoVerificaDto mov){
-		Jogo jogo = this.jogar();
+		Jogo jogo = repository.findById(mov.getJogoId()).get();
 		boolean podeMover[][] = service.verificaDestino(mov, jogo);
 		return ResponseEntity.ok(podeMover);
 	}
 	
 	@PostMapping("/move")
-	public ResponseEntity<TabuleiroDto> move(@RequestBody MovimentoDto mov){
-		Jogo jogo = this.jogar();
-		TabuleiroDto dto = service.move(mov, jogo);
-		return ResponseEntity.ok(dto);
+	public ResponseEntity<ChequeEMate> move(@RequestBody MovimentoDto mov){
+		Jogo jogo = repository.findById(mov.getJogoId()).get();
+		ChequeEMate bool = service.move(mov, jogo);
+		repository.save(jogo);
+		System.out.println("tentando mover");
+		return ResponseEntity.ok(bool);
 	}
 	
 	

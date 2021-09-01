@@ -8,7 +8,7 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 @SuppressWarnings("unused")
 class PeaoTest {
 	
-	Tabuleiro tabuleiro = new Tabuleiro();
+	Tabuleiro tabuleiro = new Tabuleiro(1);
 	Peao peao = new Peao(true, 3, 1, tabuleiro);
 	
 

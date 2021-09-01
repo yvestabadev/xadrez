@@ -8,7 +8,7 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 
 class ReiTest {
 	
-	Tabuleiro tabuleiro = new Tabuleiro();
+	Tabuleiro tabuleiro = new Tabuleiro(1);
 	Rei rei = new Rei(true, 3, 3, tabuleiro);
 
 	@Test

@@ -1,6 +1,9 @@
 package br.com.akconsultor.xadrez.pecas;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.OrderColumn;
 
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveVerticalEHorizontal;
@@ -8,8 +11,14 @@ import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 @Entity
 public class Torre extends Peca implements MoveVerticalEHorizontal, ProtegeRei {
-
+	
+	@ElementCollection
+	@JoinTable(name = "posicao_inicial_torre")
+	@OrderColumn
 	private Integer[] posicaoInicial;
+	
+	public Torre() {
+	}
 
 	public Torre(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);

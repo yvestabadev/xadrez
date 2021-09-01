@@ -15,16 +15,9 @@ public interface MoveUmPraQualquerLado {
 				try {
 					if (i != posicao[0] || j != posicao[1]) {
 						//se tiver peca da cor do rei na posicao nao pode andar
-						if(tabuleiro.getPosicoes(peca.getEhBranca(), i, j)) {
-							break;
+						if(!tabuleiro.getPosicoes(peca.getEhBranca(), i, j)) {
+							podeMover[i][j] = true;
 						} 
-						
-						podeMover[i][j] = true;
-						
-						//se tiver peca da cor adversaria pode andar mas nao pode mais andar
-						if(tabuleiro.getPosicoes(!peca.getEhBranca(), i, j));{
-							break;
-						}
 					}
 
 				} catch (ArrayIndexOutOfBoundsException e) {

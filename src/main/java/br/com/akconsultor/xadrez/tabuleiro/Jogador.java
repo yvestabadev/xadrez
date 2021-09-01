@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import br.com.akconsultor.xadrez.pecas.Bispo;
 import br.com.akconsultor.xadrez.pecas.Cavalo;
@@ -27,10 +28,14 @@ public class Jogador {
 	
 	private String nome;
 	private Boolean jogaComBranco;
-	@OneToOne
+	@Transient
 	private Tabuleiro tabuleiro;
 	@OneToMany
 	private List<Peca> pecas = new ArrayList<Peca>();
+	
+	public Jogador() {
+		
+	}
 	
 	
 	

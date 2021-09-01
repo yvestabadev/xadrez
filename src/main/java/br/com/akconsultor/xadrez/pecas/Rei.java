@@ -2,15 +2,25 @@ package br.com.akconsultor.xadrez.pecas;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.OrderColumn;
 
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveUmPraQualquerLado;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
+
 @Entity
 public class Rei extends Peca implements MoveUmPraQualquerLado {
-
+	
+	@ElementCollection
+	@JoinTable(name = "posicao_inicial_rei")
+	@OrderColumn
 	Integer[] posicaoInicial;
+
+	public Rei() {
+	}
 
 	public Rei(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
@@ -35,7 +45,7 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 		boolean podeMover[][] = moveRei(this, tabuleiro);
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (tabuleiro.getLugaresAmeacados()[i][j]) {
+				if (tabuleiro.getLugaresAmeacados(i, j)) {
 					podeMover[i][j] = false;
 				}
 			}
@@ -72,14 +82,14 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 		if (this.getEhBranca() && !tabuleiro.getPosicoes(true, 3, 0) && !tabuleiro.getPosicoes(false, 3, 0)
 				&& !tabuleiro.getPosicoes(true, 2, 0) && !tabuleiro.getPosicoes(false, 2, 0)
 				&& !tabuleiro.getPosicoes(true, 1, 0) && !tabuleiro.getPosicoes(false, 1, 0)
-				&& !tabuleiro.getLugaresAmeacados()[3][0] && !tabuleiro.getLugaresAmeacados()[2][0]) {
+				&& !tabuleiro.getLugaresAmeacados(3, 0) && !tabuleiro.getLugaresAmeacados(2, 0)) {
 			return true;
 		}
 
 		if (!this.getEhBranca() && !tabuleiro.getPosicoes(true, 3, 7) && !tabuleiro.getPosicoes(false, 3, 7)
 				&& !tabuleiro.getPosicoes(true, 2, 7) && !tabuleiro.getPosicoes(false, 2, 7)
 				&& !tabuleiro.getPosicoes(true, 1, 7) && !tabuleiro.getPosicoes(false, 1, 7)
-				&& !tabuleiro.getLugaresAmeacados()[3][7] && !tabuleiro.getLugaresAmeacados()[2][7]) {
+				&& !tabuleiro.getLugaresAmeacados(3, 7) && !tabuleiro.getLugaresAmeacados(2, 7)) {
 			return true;
 		}
 
@@ -90,13 +100,13 @@ public class Rei extends Peca implements MoveUmPraQualquerLado {
 
 		if (this.getEhBranca() && !tabuleiro.getPosicoes(true, 5, 0) && !tabuleiro.getPosicoes(false, 5, 0)
 				&& !tabuleiro.getPosicoes(true, 6, 0) && !tabuleiro.getPosicoes(false, 6, 0)
-				&& !tabuleiro.getLugaresAmeacados()[5][0] && !tabuleiro.getLugaresAmeacados()[6][0]) {
+				&& !tabuleiro.getLugaresAmeacados(5, 0) && !tabuleiro.getLugaresAmeacados(6, 0)) {
 			return true;
 		}
 
 		if (!this.getEhBranca() && !tabuleiro.getPosicoes(true, 5, 7) && !tabuleiro.getPosicoes(false, 5, 7)
 				&& !tabuleiro.getPosicoes(true, 6, 7) && !tabuleiro.getPosicoes(false, 6, 7)
-				&& !tabuleiro.getLugaresAmeacados()[5][7] && !tabuleiro.getLugaresAmeacados()[6][7]) {
+				&& !tabuleiro.getLugaresAmeacados(5, 7) && !tabuleiro.getLugaresAmeacados(6, 7)) {
 			return true;
 		}
 

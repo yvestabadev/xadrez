@@ -8,7 +8,7 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 @SuppressWarnings("unused")
 class CavaloTest {
 	
-	Tabuleiro tabuleiro = new Tabuleiro();
+	Tabuleiro tabuleiro = new Tabuleiro(1);
 	Cavalo cavalo = new Cavalo(true, 3, 3, tabuleiro);
 
 	@Test

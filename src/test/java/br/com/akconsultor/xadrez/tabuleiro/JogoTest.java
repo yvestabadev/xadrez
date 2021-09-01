@@ -37,9 +37,9 @@ class JogoTest {
 		//primeiro movimento
 
 		tabuleiro.move(j1, peca, 3, 3);
-
-		assertTrue(!tabuleiro.getPosicoes(true, 3, 1));
 		assertTrue(tabuleiro.getPosicoes(true, 3, 3));
+		assertTrue(!tabuleiro.getPosicoes(true, 3, 1));
+		
 		
 		//verificando primeiro movimento das pretas
 
@@ -373,6 +373,7 @@ class JogoTest {
 	
 	@Test
 	void naoPodeRoqueComCasaQueVaiPassarEmCheck() {
+
 		Peca pecaBranca = tabuleiro.encontrarPeca(true, 4, 1);
 		tabuleiro.verifica(j1, pecaBranca);
 		tabuleiro.move(j1, pecaBranca, 4, 3);

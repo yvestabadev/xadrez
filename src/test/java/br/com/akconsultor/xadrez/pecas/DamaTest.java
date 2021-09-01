@@ -9,7 +9,7 @@ import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
 class DamaTest {
 	
 	
-	Tabuleiro tabuleiro = new Tabuleiro();
+	Tabuleiro tabuleiro = new Tabuleiro(1);
 	Dama dama = new Dama(true, 3, 3, tabuleiro);;
 	
 

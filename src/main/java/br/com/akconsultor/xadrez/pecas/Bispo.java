@@ -6,8 +6,12 @@ import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveDiagonal;
 import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
+
 @Entity
 public class Bispo extends Peca implements MoveDiagonal, ProtegeRei {
+
+	public Bispo() {
+	}
 
 	public Bispo(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
@@ -25,12 +29,12 @@ public class Bispo extends Peca implements MoveDiagonal, ProtegeRei {
 	@Override
 	public void verificaDestino() {
 		boolean[][] movimento = moveDiagonal(this, tabuleiro);
-		
+
 		if (tabuleiro.getCheck()) {
 			boolean[][] destino = corrigeDestino(movimento, this, tabuleiro);
 			tabuleiro.complementarMovimento(destino);
 		} else {
-			
+
 			boolean[][] precisaProteger = naoSaiDoRei(movimento, this, tabuleiro);
 
 			if (precisaProteger == null) {

@@ -14,7 +14,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
@@ -25,16 +26,22 @@ public abstract class Peca {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@ElementCollection
+	@JoinTable(name = "posicao_peca")
+	@OrderColumn
 	private Integer[] posicao = new Integer[2];
 	private Boolean ehBranca;
 	@ElementCollection(targetClass = Direcao.class)
 	@JoinTable(name = "direcoes_peca", joinColumns = @JoinColumn (name = "peca_id"))
 	@Enumerated(EnumType.STRING)
 	protected List<Direcao> direcoes = new ArrayList<Direcao>();
-	@OneToOne
+	@ManyToOne
 	protected Tabuleiro tabuleiro;
 	private Direcao direcaoProtegida;
+	
+	public Peca() {
+		
+	}
 	
 	public void resetDirecaoProtegida() {
 		this.direcaoProtegida = null;

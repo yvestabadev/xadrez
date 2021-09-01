@@ -3,6 +3,8 @@ package br.com.akconsultor.xadrez.tabuleiro;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 
 import br.com.akconsultor.xadrez.pecas.Bispo;
@@ -23,38 +26,56 @@ import br.com.akconsultor.xadrez.pecas.Peca;
 import br.com.akconsultor.xadrez.pecas.Rei;
 import br.com.akconsultor.xadrez.pecas.Torre;
 import br.com.akconsultor.xadrez.pecas.movimentos.Direcao;
-
 @Entity
 public class Tabuleiro {
+	
+	//preciso trocar as matrizes por algo mais simplificado para BD
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	private boolean[][] posicoesBrancas = new boolean[8][8];	
-	private boolean[][] posicoesPretas = new boolean[8][8];
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@OrderColumn
+	private Linha[] posicoesBrancas = new Linha[8];	
+	@OneToMany(cascade = CascadeType.ALL)
+	@OrderColumn
+	private Linha[] posicoesPretas = new Linha[8];
+	@OneToMany(cascade = CascadeType.ALL)
+	@OrderColumn
+	private Linha[] lugaresAmeacados = new Linha[8];
+	
+	@Transient
 	private boolean[][] acionarMovimento = new boolean[8][8];
-	private boolean[][] lugaresAmeacados = new boolean[8][8];
-	@OneToMany
+	
+	@OneToMany(mappedBy = "tabuleiro", cascade = CascadeType.ALL)
 	private List<Peca> pecasBrancas = new ArrayList<Peca>();
-	@OneToMany
+	@OneToMany(mappedBy = "tabuleiro", cascade = CascadeType.ALL)
 	private List<Peca> pecasPretas = new ArrayList<Peca>();
 	private Boolean vezDasBrancas = true;
 	@Transient
 	private Peca pecaCapturada;
+	@Column(name = "cheque")
 	private Boolean check = false;
 	private Boolean checkmate = false;
+	@ElementCollection
+	@JoinTable(name = "posicao_rei_branco")
+	@OrderColumn
 	private Integer[] reiBranco = new Integer[2];
+	@ElementCollection
+	@JoinTable(name = "posicao__rei_preto")
+	@OrderColumn
 	private Integer[] reiPreto = new Integer[2];
 	@OneToOne
-	private Rei reiBrancoPeca;
+	private Peca reiBrancoPeca;
 	@OneToOne
-	private Rei reiPretoPeca;
+	private Peca reiPretoPeca;
+	
 	@ElementCollection(targetClass = Direcao.class)
-	@JoinTable(name = "direcoes_check", joinColumns = @JoinColumn(name = "TabuleiroId"))
+	@JoinTable(name = "direcoes_check", joinColumns = @JoinColumn(name = "tabuleiro_id"))
 	@Enumerated(EnumType.STRING)
 	private List<Direcao> direcoesCheck = new ArrayList<Direcao>();
-	@OneToOne
+	@Transient
 	private Peca pecaAmeaca;
 
 	private Boolean roquePequenoPreto = true;
@@ -66,6 +87,19 @@ public class Tabuleiro {
 	private Boolean atencaoRoquePequenoBranco = false;
 	private Boolean atencaoRoqueGrandePreto = false;
 	private Boolean atencaoRoqueGrandeBranco = false;
+	
+	
+	public Tabuleiro() {
+		
+	}
+	
+	public Tabuleiro(int qualquerCoisa) {
+		for(int i = 0; i < 8; i++) {
+			this.lugaresAmeacados[i] = new Linha();
+			this.posicoesBrancas[i] = new Linha();
+			this.posicoesPretas[i] = new Linha();
+		}
+	}
 
 	public Boolean getCheckmate() {
 		return checkmate;
@@ -153,27 +187,27 @@ public class Tabuleiro {
 		return check;
 	}
 
-	public boolean[][] getLugaresAmeacados() {
-		return lugaresAmeacados;
+	public boolean getLugaresAmeacados(int coluna, int linha) {
+		return lugaresAmeacados[coluna].getBool(linha);
 	}
 
 	public boolean getPosicoes(Boolean ehBranca, Integer coluna, Integer linha) {
 		if (ehBranca) {
-			return posicoesBrancas[coluna][linha];
+			return posicoesBrancas[coluna].getBool(linha);
 		} else {
-			return posicoesPretas[coluna][linha];
+			return posicoesPretas[coluna].getBool(linha);
 		}
 	}
 
 
 
 	public void setPosicoesBrancas(Peca peca, Integer coluna, Integer linha) {
-		this.posicoesBrancas[coluna][linha] = true;
+		this.posicoesBrancas[coluna].setBool(true, linha);
 	}
 
 
 	public void setPosicoesPretas(Peca peca, Integer coluna, Integer linha) {
-		this.posicoesPretas[coluna][linha] = true;
+		this.posicoesPretas[coluna].setBool(true, linha);
 	}
 
 	public boolean[][] getAcionarMovimento() {
@@ -218,7 +252,7 @@ public class Tabuleiro {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (movimento[i][j]) {
-					this.lugaresAmeacados[i][j] = true;
+					this.lugaresAmeacados[i].setBool(true, j);
 				}
 			}
 		}
@@ -234,21 +268,22 @@ public class Tabuleiro {
 	}
 
 	public void move(Jogador jogador, Peca peca, Integer coluna, Integer linha) {
+		
 		if (jogador.getJogaComBranco() && this.vezDasBrancas && this.acionarMovimento[coluna][linha]) {
-			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
+			this.posicoesBrancas[peca.getPosicao()[0]].setBool(false, peca.getPosicao()[1]);
 			peca.setPosicao(coluna, linha);
-			this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
+			this.posicoesBrancas[peca.getPosicao()[0]].setBool(true, peca.getPosicao()[1]);
 
 			if (atencaoRoqueGrandeBranco && coluna == 2 && linha == 0) {
 				Peca torre = this.encontrarPeca(true, 0, 0);
-				this.posicoesBrancas[0][0] = false;
+				this.posicoesBrancas[0].setBool(false, 0);
 				torre.setPosicao(3, 0);
-				this.posicoesBrancas[3][0] = true;
+				this.posicoesBrancas[3].setBool(true, 0);
 			} else if (atencaoRoquePequenoBranco && coluna == 6 && linha == 0) {
 				Peca torre = this.encontrarPeca(true, 0, 0);
-				this.posicoesBrancas[7][0] = false;
+				this.posicoesBrancas[7].setBool(false, 0);
 				torre.setPosicao(5, 0);
-				this.posicoesBrancas[5][0] = true;
+				this.posicoesBrancas[5].setBool(true, 0);
 			}
 
 			// verifica captura
@@ -262,7 +297,7 @@ public class Tabuleiro {
 
 			if (pecaCapturada != null) {
 				this.pecasPretas.remove(pecaCapturada);
-				this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
+				this.posicoesPretas[peca.getPosicao()[0]].setBool(false, peca.getPosicao()[1]);
 				this.pecaCapturada = null;
 			}
 
@@ -272,11 +307,12 @@ public class Tabuleiro {
 				p.ameacaCasas();
 				p.resetDirecaoProtegida();
 			});
-			if (this.lugaresAmeacados[reiPreto[0]][reiPreto[1]]) {
+			if (this.lugaresAmeacados[reiPreto[0]].getBool(reiPreto[1])) {
 				this.check = true;
 			}
 
-			reiPretoPeca.pedeProtecao();
+			Rei rei = (Rei) reiPretoPeca;
+			rei.pedeProtecao();
 
 			this.vezDasBrancas = false;
 
@@ -310,20 +346,20 @@ public class Tabuleiro {
 			}
 
 		} else if (!jogador.getJogaComBranco() && !this.vezDasBrancas && this.acionarMovimento[coluna][linha]) {
-			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
+			this.posicoesPretas[peca.getPosicao()[0]].setBool(false, peca.getPosicao()[1]);
 			peca.setPosicao(coluna, linha);
-			this.posicoesPretas[peca.getPosicao()[0]][peca.getPosicao()[1]] = true;
+			this.posicoesPretas[peca.getPosicao()[0]].setBool(true, peca.getPosicao()[1]);
 
 			if (atencaoRoqueGrandePreto && coluna == 2 && linha == 7) {
 				Peca torre = this.encontrarPeca(false, 0, 7);
-				this.posicoesPretas[0][7] = false;
+				this.posicoesPretas[0].setBool(false, 7);
 				torre.setPosicao(3, 7);
-				this.posicoesPretas[3][7] = true;
+				this.posicoesPretas[3].setBool(true, 7);
 			} else if (atencaoRoquePequenoPreto && coluna == 6 && linha == 7) {
 				Peca torre = this.encontrarPeca(false, 7, 7);
-				this.posicoesPretas[7][7] = false;
+				this.posicoesPretas[7].setBool(false, 7);
 				torre.setPosicao(5, 7);
-				this.posicoesPretas[5][7] = true;
+				this.posicoesPretas[5].setBool(true, 7);
 			}
 
 			// verifica captura
@@ -336,7 +372,7 @@ public class Tabuleiro {
 
 			if (pecaCapturada != null) {
 				pecasBrancas.remove(pecaCapturada);
-				this.posicoesBrancas[peca.getPosicao()[0]][peca.getPosicao()[1]] = false;
+				this.posicoesBrancas[peca.getPosicao()[0]].setBool(false, peca.getPosicao()[1]);
 				pecaCapturada = null;
 			}
 
@@ -347,11 +383,12 @@ public class Tabuleiro {
 				p.resetDirecaoProtegida();
 			});
 
-			if (this.lugaresAmeacados[reiBranco[0]][reiBranco[1]]) {
+			if (this.lugaresAmeacados[reiBranco[0]].getBool(reiBranco[1])) {
 				this.check = true;
 			}
 
-			reiBrancoPeca.pedeProtecao();
+			Rei rei = (Rei) reiBrancoPeca;
+			rei.pedeProtecao();
 
 			this.vezDasBrancas = true;
 
@@ -390,7 +427,10 @@ public class Tabuleiro {
 	}
 
 	private void resetCheck() {
-		this.lugaresAmeacados = new boolean[8][8];
+		for(int i = 0; i < 8; i++) {
+			this.lugaresAmeacados[i] = new Linha();
+		}
+		
 		this.resetDirecoesCheck();
 		this.pecaAmeaca = null;
 		this.check = false;
@@ -481,6 +521,10 @@ public class Tabuleiro {
 			}
 		}
 
+	}
+	
+	public void validaMovimento(int coluna, int linha) {
+		this.acionarMovimento[coluna][linha] = true;
 	}
 
 }

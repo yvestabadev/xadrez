@@ -13,8 +13,8 @@ import br.com.akconsultor.xadrez.pecas.Rei;
 class CheckTest {
 	/*eh importante  ter um tabuleiro "laranja" para receber as pecas do jogo e um vazio para
 	poder adicionar as pecas que quiser aonde quiser*/ 
-	Tabuleiro nd = new Tabuleiro();
-	Tabuleiro tabuleiro = new Tabuleiro();
+	Tabuleiro nd = new Tabuleiro(1);
+	Tabuleiro tabuleiro = new Tabuleiro(1);
 	Jogador j1 = new Jogador("a", true, nd);
 	Jogador j2 = new Jogador("b", false, nd);
 	
@@ -54,6 +54,7 @@ class CheckTest {
 	
 	@Test
 	void peaoPassaNaFrenteDaDamaEReiNaoPodeEntrarEmCheckComOProprioMovimento() {
+		
 		tabuleiro.verifica(j1, reiBranco);
 		tabuleiro.move(j1, reiBranco, 0, 1);
 		

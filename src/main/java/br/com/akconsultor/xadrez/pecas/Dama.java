@@ -7,8 +7,12 @@ import br.com.akconsultor.xadrez.pecas.movimentos.MoveDiagonal;
 import br.com.akconsultor.xadrez.pecas.movimentos.MoveVerticalEHorizontal;
 import br.com.akconsultor.xadrez.pecas.movimentos.ProtegeRei;
 import br.com.akconsultor.xadrez.tabuleiro.Tabuleiro;
+
 @Entity
 public class Dama extends Peca implements MoveDiagonal, MoveVerticalEHorizontal, ProtegeRei {
+
+	public Dama() {
+	}
 
 	public Dama(Boolean ehBranca, Integer coluna, Integer linha, Tabuleiro tabuleiro) {
 		super.setEhBranca(ehBranca);
