@@ -415,7 +415,6 @@ class JogoTest {
 	
 	@Test
 	void checkmate() {
-		
 		Peca peaoBispo = tabuleiro.encontrarPeca(true, 5, 1);		
 		tabuleiro.verifica(j1, peaoBispo);
 		tabuleiro.move(j1, peaoBispo, 5, 2);

@@ -48,9 +48,9 @@ public class Tabuleiro {
 	@Transient
 	private boolean[][] acionarMovimento = new boolean[8][8];
 	
-	@OneToMany(mappedBy = "tabuleiro", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Peca> pecasBrancas = new ArrayList<Peca>();
-	@OneToMany(mappedBy = "tabuleiro", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Peca> pecasPretas = new ArrayList<Peca>();
 	private Boolean vezDasBrancas = true;
 	@Transient
@@ -414,6 +414,7 @@ public class Tabuleiro {
 						break;
 					}
 					contador--;
+					
 					if (contador == 0) {
 						this.checkmate = true;
 					}

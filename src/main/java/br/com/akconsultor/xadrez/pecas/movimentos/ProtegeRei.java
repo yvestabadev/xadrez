@@ -90,15 +90,21 @@ public interface ProtegeRei {
 				}
 
 			} else if (direcao == Direcao.SW) {
-				//quando o metodo e acionado pelo controller precisa de try, catch, o que e errado
-				//provavelmente o atributo pecaAmeaca fica diferente pelo controller
+				/*quando o metodo e acionado pelo controller precisa de try, catch, o que e errado
+				O metodo nao esta caindo no break, mas mesmo com exception o atributo
+				pecaAmeaca aparece corretamente no banco de dados*/
+				
 				for (int i = rei[0] + 1; i < 8; i++) {
 					int j = rei[1] + (i - rei[0]);
-	
+					System.out.println("o laco esta percorrendo em " + i + " - " + j);
+						if(j == 8) {
+							System.out.println("a peca que ta bugando esta na posicao " + peca.getPosicao()[0] + " " + peca.getPosicao()[1] + peca + " " + peca.getEhBranca());
+						}
 						podeMover[i][j] = true;
 
 					if (i == pecaAmeaca[0] && j == pecaAmeaca[1]) {
-						break;
+						System.out.println(i + " entrou no break " + j);
+						return podeMover;
 					}
 
 				}
